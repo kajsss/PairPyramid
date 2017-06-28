@@ -1,4 +1,4 @@
-package msl.com.pairpyramid.view.main.presenter
+package msl.com.pairpyramid.view.presenter
 
 interface MainContract{
 

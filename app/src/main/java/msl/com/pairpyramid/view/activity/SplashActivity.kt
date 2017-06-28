@@ -1,4 +1,4 @@
-package msl.com.pairpyramid.view.main.activity
+package msl.com.pairpyramid.view.activity
 
 import android.content.Intent
 import android.os.Bundle

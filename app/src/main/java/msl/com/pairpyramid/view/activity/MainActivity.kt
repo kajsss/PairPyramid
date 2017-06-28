@@ -1,10 +1,10 @@
-package msl.com.pairpyramid.view.main.activity
+package msl.com.pairpyramid.view.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import msl.com.pairpyramid.R
-import msl.com.pairpyramid.view.main.database.MockDatabase
+import msl.com.pairpyramid.database.MockDatabase
 
 
 class MainActivity : AppCompatActivity() {

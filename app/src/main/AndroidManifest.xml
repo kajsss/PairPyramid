@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.main.activity.SplashActivity">
+        <activity android:name="msl.com.pairpyramid.view.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,7 +18,7 @@
         </activity>
 
 
-        <activity android:name=".view.main.activity.MainActivity"/>
+        <activity android:name="msl.com.pairpyramid.view.activity.MainActivity"/>
     </application>
 
 </manifest>

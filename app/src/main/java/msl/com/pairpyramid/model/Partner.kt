@@ -1,4 +1,4 @@
-package msl.com.pairpyramid.view.main.model
+package msl.com.pairpyramid.model
 
 import java.util.*
 

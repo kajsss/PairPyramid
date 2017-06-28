@@ -1,8 +1,8 @@
-package msl.com.pairpyramid.view.main.database
+package msl.com.pairpyramid.database
 
 import com.google.common.collect.Lists
-import msl.com.pairpyramid.view.main.model.Partner
-import msl.com.pairpyramid.view.main.model.Player
+import msl.com.pairpyramid.model.Partner
+import msl.com.pairpyramid.model.Player
 
 
 class MockDatabase  {
