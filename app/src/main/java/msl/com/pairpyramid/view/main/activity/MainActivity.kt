@@ -1,7 +1,7 @@
-package msl.com.pairpyramid.view.main
+package msl.com.pairpyramid.view.main.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import msl.com.pairpyramid.R
 
 class MainActivity : AppCompatActivity() {
