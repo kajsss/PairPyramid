@@ -9,7 +9,7 @@ class MockDatabase  {
 
     constructor()
 
-    var playerList: ArrayList<Player> ?= null
+    var playerList: ArrayList<Player>
     var partnerList: ArrayList<Partner> = ArrayList()
 
     init {

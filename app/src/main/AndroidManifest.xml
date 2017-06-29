@@ -20,6 +20,7 @@
 
 
         <activity android:name="msl.com.pairpyramid.view.activity.MainActivity"/>
+        <activity android:name="msl.com.pairpyramid.view.activity.PlayerListActivity"/>
     </application>
 
 </manifest>
