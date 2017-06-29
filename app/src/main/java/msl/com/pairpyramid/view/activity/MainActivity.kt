@@ -1,5 +1,6 @@
 package msl.com.pairpyramid.view.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -13,13 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var db = MockDatabase()
-
-
-        Log.d("###", "### ${db.playerList!!.get(0).name}")
-
-        Log.d("###", "### ${db.partnerList.get(0).players.get(0).name}")
-        Log.d("###",  "### ${db.partnerList.get(0).date.toString()}")
-
+        val intent = Intent(this,PlayerListActivity::class.java)
+        startActivity(intent)
     }
 }

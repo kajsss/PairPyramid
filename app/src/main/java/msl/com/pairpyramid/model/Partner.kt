@@ -12,7 +12,4 @@ open class Partner {
     fun addPlayer(vararg player : Player){
         players.addAll(player)
     }
-
-
-
 }
