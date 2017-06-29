@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:screenOrientation="portrait"
         >
         <activity android:name="msl.com.pairpyramid.view.activity.SplashActivity">
             <intent-filter>
