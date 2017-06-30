@@ -12,5 +12,6 @@ interface PlayerListContract {
     }
 
     interface View {
+        fun moveToMainActivity()
     }
 }

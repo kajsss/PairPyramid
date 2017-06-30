@@ -27,5 +27,19 @@ class PlayerListActivity : AppCompatActivity(), PlayerListContract.View {
             playerListAdapter.apply { item = it }
             playerListAdapter.notifyDataSetChanged()
         }
+
+        findViewById(R.id.btn_cancel).setOnClickListener { v ->
+            moveToMainActivity()
+        }
+
+
     }
+
+
+    override fun moveToMainActivity() {
+        finish()
+    }
+
+
+
 }
