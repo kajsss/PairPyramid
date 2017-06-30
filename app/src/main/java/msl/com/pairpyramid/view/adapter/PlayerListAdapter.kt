@@ -31,10 +31,9 @@ class PlayerListAdapter : RecyclerView.Adapter<PlayerListAdapter.ViewHolder>() {
             userEmail.text = player?.email
 
             setOnClickListener {
-                if (userCheck.visibility == View.INVISIBLE) {
-                    userCheck.visibility = View.VISIBLE
-                } else {
-                    userCheck.visibility = View.INVISIBLE
+                userCheck.visibility = when(userCheck.visibility) {
+                    View.VISIBLE -> View.INVISIBLE
+                    else -> View.VISIBLE
                 }
             }
         }
