@@ -30,6 +30,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         >
+
         <Button
             android:id="@+id/btn_matching"
             android:layout_alignParentBottom="true"
@@ -37,6 +38,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Matching"
-            android:background="@color/NavajoWhite"/>
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:background="@color/Black"/>
     </RelativeLayout>
 </LinearLayout>
