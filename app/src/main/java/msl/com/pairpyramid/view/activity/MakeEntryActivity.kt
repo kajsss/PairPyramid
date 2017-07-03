@@ -4,26 +4,26 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_player_list.*
+import kotlinx.android.synthetic.main.activity_make_entry.*
 import msl.com.pairpyramid.R
 import msl.com.pairpyramid.view.adapter.PlayerListAdapter
-import msl.com.pairpyramid.view.presenter.PlayerListContract
-import msl.com.pairpyramid.view.presenter.PlayerListPresenter
+import msl.com.pairpyramid.view.presenter.entry.MakeEntryContract
+import msl.com.pairpyramid.view.presenter.entry.MakeEntryPresenter
 
-class PlayerListActivity : AppCompatActivity(), PlayerListContract.View {
+class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
 
-    lateinit var playerListPresenter : PlayerListPresenter
+    lateinit var playerListPresenter : MakeEntryPresenter
     lateinit var playerListAdapter : PlayerListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_player_list)
+        setContentView(R.layout.activity_make_entry)
 
         playerListAdapter = PlayerListAdapter()
         playerRecyclerView.layoutManager = LinearLayoutManager(this)
         playerRecyclerView.adapter = playerListAdapter
 
-        playerListPresenter = PlayerListPresenter(this)
+        playerListPresenter = MakeEntryPresenter(this)
         playerListPresenter.loadPlayerList { playerList ->
             playerListAdapter.apply { item = playerList }
             playerListAdapter.notifyDataSetChanged()
@@ -41,6 +41,6 @@ class PlayerListActivity : AppCompatActivity(), PlayerListContract.View {
     }
 
     override fun getContext(): Context {
-        return this@PlayerListActivity
+        return this@MakeEntryActivity
     }
 }

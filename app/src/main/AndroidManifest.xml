@@ -22,7 +22,7 @@
 
         <activity android:name="msl.com.pairpyramid.view.activity.MainActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name="msl.com.pairpyramid.view.activity.PlayerListActivity"
+        <activity android:name="msl.com.pairpyramid.view.activity.MakeEntryActivity"
             android:screenOrientation="portrait"/>
     </application>
 
