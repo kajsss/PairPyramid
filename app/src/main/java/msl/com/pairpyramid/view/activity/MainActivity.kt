@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
 
         findViewById(R.id.btn_matching).setOnClickListener { v ->
             startActivity<PlayerListActivity>()
-            debug("")
         }
 
     }

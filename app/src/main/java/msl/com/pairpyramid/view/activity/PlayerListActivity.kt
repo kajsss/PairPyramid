@@ -35,8 +35,7 @@ class PlayerListActivity : AppCompatActivity(), PlayerListContract.View {
 
     }
 
-
-    override fun moveToMainActivity() {
+    fun moveToMainActivity() {
         finish()
     }
 
