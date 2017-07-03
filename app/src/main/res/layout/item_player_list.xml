@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_face_black"/>
+            android:src="@drawable/ic_face_black"
+            android:tint="#666666"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -51,7 +52,8 @@
             android:layout_height="32dp"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="30dp"
-            android:src="@drawable/ic_done_black"/>
+            android:src="@drawable/ic_done_black"
+            android:tint="#666666"/>
     </LinearLayout>
 
     <View

@@ -10,7 +10,7 @@ import msl.com.pairpyramid.model.Player
 
 class PlayerListAdapter : RecyclerView.Adapter<PlayerListAdapter.ViewHolder>() {
 
-    var item : ArrayList<Player>? = null
+    var item : List<Player>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent!!.getContext())

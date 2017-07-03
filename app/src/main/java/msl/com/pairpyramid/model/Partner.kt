@@ -3,13 +3,8 @@ package msl.com.pairpyramid.model
 import java.util.*
 
 
-open class Partner {
+data class Partner(var player_1 :String, var player_2 : String) {
 
     var id : String = UUID.randomUUID().toString()
-    var players : ArrayList<Player> = ArrayList()
-    var date : Date = Date()
-
-    fun addPlayer(vararg player : Player){
-        players.addAll(player)
-    }
+    var createDate : Date = Date()
 }

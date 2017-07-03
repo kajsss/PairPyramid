@@ -1,5 +1,6 @@
 package msl.com.pairpyramid.view.activity
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -23,12 +24,12 @@ class PlayerListActivity : AppCompatActivity(), PlayerListContract.View {
         playerRecyclerView.adapter = playerListAdapter
 
         playerListPresenter = PlayerListPresenter(this)
-        playerListPresenter.loadPlayerList() {
-            playerListAdapter.apply { item = it }
+        playerListPresenter.loadPlayerList { playerList ->
+            playerListAdapter.apply { item = playerList }
             playerListAdapter.notifyDataSetChanged()
         }
 
-        findViewById(R.id.btn_cancel).setOnClickListener { v ->
+        findViewById(R.id.btn_cancel).setOnClickListener {
             moveToMainActivity()
         }
 
@@ -39,6 +40,7 @@ class PlayerListActivity : AppCompatActivity(), PlayerListContract.View {
         finish()
     }
 
-
-
+    override fun getContext(): Context {
+        return this@PlayerListActivity
+    }
 }
