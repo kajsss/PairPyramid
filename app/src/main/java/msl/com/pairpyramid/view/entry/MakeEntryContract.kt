@@ -1,6 +1,6 @@
-package msl.com.pairpyramid.view.presenter.entry
+package msl.com.pairpyramid.view.entry
 
-import android.content.Context
+import msl.com.pairpyramid.model.Partner
 import msl.com.pairpyramid.model.Player
 
 interface MakeEntryContract {
@@ -10,10 +10,10 @@ interface MakeEntryContract {
         var playerList : List<Player>
 
         fun loadPlayerList(updateAdapter : (List<Player>) -> Unit)
-        fun matchingPartners(playerList : List<Player>)
+        fun matchingPartners(players: List<Player>): List<Partner>
     }
 
     interface View {
-        fun getContext() : Context
+        fun getContext() : android.content.Context
     }
 }

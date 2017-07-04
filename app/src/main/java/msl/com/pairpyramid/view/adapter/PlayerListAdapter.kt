@@ -10,7 +10,7 @@ import msl.com.pairpyramid.model.Player
 
 class PlayerListAdapter : RecyclerView.Adapter<PlayerListAdapter.ViewHolder>() {
 
-    var item : List<Player>? = null
+    var item: List<Player>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent!!.getContext())
@@ -19,22 +19,20 @@ class PlayerListAdapter : RecyclerView.Adapter<PlayerListAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder!!.bind(item?.get(position))
+        holder!!.bind(item!!.get(position))
     }
 
     override fun getItemCount(): Int = item!!.size
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(player: Player?) = with(itemView) {
-            userName.text = player?.name
-            userEmail.text = player?.email
+        fun bind(player: Player) = with(itemView) {
+            userName.text = player.name
+            userEmail.text = player.email
 
             setOnClickListener {
-                userCheck.visibility = when(userCheck.visibility) {
-                    View.VISIBLE -> View.INVISIBLE
-                    else -> View.VISIBLE
-                }
+                player.checked = if(player.checked) false else true
+                userCheck.visibility = if (player.checked) View.VISIBLE else View.INVISIBLE
             }
         }
     }

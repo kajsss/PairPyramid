@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import msl.com.pairpyramid.R
 import msl.com.pairpyramid.custom.PyramidView
+import msl.com.pairpyramid.view.entry.MakeEntryActivity
 import org.jetbrains.anko.startActivity
 
 
@@ -21,9 +22,10 @@ class MainActivity : AppCompatActivity() {
         val nameList = arrayOf("Milo", "Lamos", "Woody", "Dave", "Steve", "Sue", "Kafri", "Hubert")
         main_layout.addView(PyramidView(this@MainActivity, PLAYER_COUNT, nameList), INSERT_INDEX)
 
-        findViewById(R.id.btn_matching).setOnClickListener { v ->
+        btn_matching.setOnClickListener { v ->
             startActivity<MakeEntryActivity>()
         }
+
 
     }
 

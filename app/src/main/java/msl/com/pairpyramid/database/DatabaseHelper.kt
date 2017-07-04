@@ -8,7 +8,7 @@ import msl.com.pairpyramid.model.Player
 import org.jetbrains.anko.db.*
 import java.util.*
 
-class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairPyramidDatabase", null, 1) {
+class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairPyramidDatabase", null, 4) {
 
     companion object {
         private var instance: DatabaseHelper? = null
@@ -31,8 +31,8 @@ class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairP
     private fun createPartnerTable(db: SQLiteDatabase) {
         db.createTable("Partner", true,
                 "id" to TEXT + PRIMARY_KEY,
-                "player_1" to TEXT,
-                "player_2" to TEXT,
+                "player_1" to INTEGER,
+                "player_2" to INTEGER,
                 "create_date" to TEXT).run {
             d("#createPartner : ", "Create Table !! and run !!")
 
@@ -41,7 +41,7 @@ class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairP
 
     private fun createPlayerTable(db: SQLiteDatabase) {
         db.createTable("Player", true,
-                "id" to TEXT + PRIMARY_KEY ,
+                "id" to INTEGER + PRIMARY_KEY ,
                 "name" to TEXT,
                 "email" to TEXT,
                 "useYn" to INTEGER).run {
@@ -59,24 +59,32 @@ class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairP
         }
     }
 
+    override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.dropTable("Player")
+        db.dropTable("Partner")
+        createPlayerTable(db)
+        createPartnerTable(db)
+        defaultDataGenerate(db)
+    }
+
     private fun defaultDataGenerate(db: SQLiteDatabase) {
 
 
-        var player1 = Player("Player1", "player1@gmail.com")
-        var player2 = Player("Player2", "player2@gmail.com")
-        var player3 = Player("Player3", "player2@gmail.com")
-        var player4 = Player("Player4", "player2@gmail.com")
-        var player5 = Player("Player5", "player2@gmail.com")
-        var player6 = Player("Player6", "player2@gmail.com")
-        var player7 = Player("Player7", "player2@gmail.com")
-        var player8 = Player("Player8", "player2@gmail.com")
+        var player1 = Player(1, "Player1", "player1@gmail.com")
+        var player2 = Player(2, "Player2", "player2@gmail.com")
+        var player3 = Player(3, "Player3", "player2@gmail.com")
+        var player4 = Player(4, "Player4", "player2@gmail.com")
+        var player5 = Player(5, "Player5", "player2@gmail.com")
+        var player6 = Player(6, "Player6", "player2@gmail.com")
+        var player7 = Player(7, "Player7", "player2@gmail.com")
+        var player8 = Player(8, "Player8", "player2@gmail.com")
 
         var partner1 = Partner(player1.id, player2.id)
-        var partner2 = Partner(player6.id, player2.id)
+        var partner2 = Partner(player2.id, player6.id)
         var partner3 = Partner(player1.id, player3.id)
         var partner4 = Partner(player3.id, player4.id)
         var partner5 = Partner(player7.id, player7.id)
-        var partner6 = Partner(player8.id, player5.id)
+        var partner6 = Partner(player5.id, player8.id)
         var partner7 = Partner(player1.id, player7.id)
         var partner8 = Partner(player2.id, player4.id)
 

@@ -1,8 +1,6 @@
 package msl.com.pairpyramid.model
 
-import java.util.*
-
-data class Player constructor(var name : String, var email : String){
-    var id : String = UUID.randomUUID().toString()
+data class Player constructor(var id : Int, var name : String, var email : String){
     var useYn : Boolean = true
+    var checked : Boolean = true
 }

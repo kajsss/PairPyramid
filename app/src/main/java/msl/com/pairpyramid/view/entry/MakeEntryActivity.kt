@@ -1,19 +1,18 @@
-package msl.com.pairpyramid.view.activity
+package msl.com.pairpyramid.view.entry
 
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log.d
 import kotlinx.android.synthetic.main.activity_make_entry.*
 import msl.com.pairpyramid.R
 import msl.com.pairpyramid.view.adapter.PlayerListAdapter
-import msl.com.pairpyramid.view.presenter.entry.MakeEntryContract
-import msl.com.pairpyramid.view.presenter.entry.MakeEntryPresenter
 
 class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
 
-    lateinit var playerListPresenter : MakeEntryPresenter
-    lateinit var playerListAdapter : PlayerListAdapter
+    lateinit var makeEntryPresenter: MakeEntryPresenter
+    lateinit var playerListAdapter: PlayerListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,18 +20,26 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
 
         playerListAdapter = PlayerListAdapter()
         playerRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        makeEntryPresenter = MakeEntryPresenter(this)
         playerRecyclerView.adapter = playerListAdapter
 
-        playerListPresenter = MakeEntryPresenter(this)
-        playerListPresenter.loadPlayerList { playerList ->
+        makeEntryPresenter.loadPlayerList { playerList ->
             playerListAdapter.apply { item = playerList }
             playerListAdapter.notifyDataSetChanged()
         }
 
-        findViewById(R.id.btn_cancel).setOnClickListener {
+
+        btn_cancel.setOnClickListener {
             moveToMainActivity()
         }
 
+        btn_ok.setOnClickListener {
+            var matchingPartners = makeEntryPresenter.matchingPartners(playerListAdapter.item!!.filter { it.checked == true })
+            matchingPartners.forEach { it ->
+                d("# " , it.toString())
+            }
+        }
 
     }
 
@@ -43,4 +50,5 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
     override fun getContext(): Context {
         return this@MakeEntryActivity
     }
+
 }
