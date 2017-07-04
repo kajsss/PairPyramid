@@ -28,9 +28,6 @@ class MainActivity : AppCompatActivity() {
                 .toTypedArray()
         pairCountsHashMap = PartnerDao(this).selectPairCounts()
 
-
-        pairCountsHashMap.forEach { t, u -> println(t.first.toString() + "-" + t.second.toString() + ":" + u) }
-
         main_layout.addView(PyramidView(this@MainActivity, playerNameList, pairCountsHashMap), INSERT_INDEX)
 
         findViewById(R.id.btn_matching).setOnClickListener { v ->
