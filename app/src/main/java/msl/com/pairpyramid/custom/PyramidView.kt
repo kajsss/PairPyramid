@@ -12,6 +12,7 @@ open class PyramidView : LinearLayout {
 
     var playersCount = 5 // Default Player Count
     lateinit var nameList : Array<String>
+    lateinit var pairCountsHashMap: HashMap<Pair<Int, Int>, Int>
 
 
     constructor(context: Context) : super(context) {
@@ -39,6 +40,14 @@ open class PyramidView : LinearLayout {
         drawPyramid()
     }
 
+    constructor(context: Context, nameList: Array<String>, pairCountsHashMap : HashMap<Pair<Int, Int>, Int>) : super(context) {
+        this.playersCount = nameList.size
+        this.nameList = nameList
+        this.pairCountsHashMap = pairCountsHashMap
+        initView()
+        drawPyramid()
+    }
+
 
     private fun initView() {
         setBackgroundColor(R.color.background_material_light)
@@ -51,7 +60,11 @@ open class PyramidView : LinearLayout {
         for(i in 1..playersCount){
             var newLine  = getNewLine(context)
             for(j in 1..i){
-                newLine.addView(PyramidTriangle(context, getTriangleSize(), getFontSize(),i+j+10 ))
+                var count = pairCountsHashMap[Pair(j, playersCount - i + j )]
+                if(count == null) {
+                    count = 0
+                }
+                newLine.addView(PyramidTriangle(context, getTriangleSize(), getFontSize(), count!!))
             }
             layout_pyramid.addView(newLine)
         }

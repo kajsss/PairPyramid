@@ -45,6 +45,20 @@ class PartnerDao(var context: Context) {
             partnerList = select("Partner").whereArgs("player_1 IN (${query}) AND player_2 IN (${query})").parseList(PartnerRowParser())
         }
         return partnerList
-   }
+    }
 
+    fun selectPairCounts() : HashMap<Pair<Int, Int>, Int> {
+        var allPartnerList = selectAllPartnerList()
+        var pairCountHashMap : HashMap<Pair<Int, Int>, Int> = hashMapOf()
+
+        allPartnerList?.forEach{
+            if(pairCountHashMap[Pair(it.player_1, it.player_2)] == null) {
+                pairCountHashMap[Pair(it.player_1, it.player_2)] = 1}
+            else{
+                pairCountHashMap.set(Pair(it.player_1, it.player_2), pairCountHashMap[Pair(it.player_1, it.player_2)]!!.inc())
+            }
+        }
+
+        return pairCountHashMap
+    }
 }

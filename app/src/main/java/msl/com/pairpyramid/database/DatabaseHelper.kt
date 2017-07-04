@@ -8,7 +8,7 @@ import msl.com.pairpyramid.model.Player
 import org.jetbrains.anko.db.*
 import java.util.*
 
-class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairPyramidDatabase", null, 4) {
+class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairPyramidDatabase", null, 5) {
 
     companion object {
         private var instance: DatabaseHelper? = null
@@ -87,6 +87,8 @@ class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairP
         var partner6 = Partner(player5.id, player8.id)
         var partner7 = Partner(player1.id, player7.id)
         var partner8 = Partner(player2.id, player4.id)
+        var partner9 = Partner(player2.id, player1.id)
+        var partner10 = Partner(player1.id, player2.id)
 
 //        this@DatabaseHelper.use {
 
@@ -110,6 +112,8 @@ class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairP
             db.insert("Partner", "id" to partner7.id, "player_1" to partner7.player_1, "player_2" to partner7.player_2, "create_date" to Date().toString())
             db.insert("Partner", "id" to partner8.id, "player_1" to partner8.player_1, "player_2" to partner8.player_2, "create_date" to Date().toString())
 
+            db.insert("Partner", "id" to partner9.id, "player_1" to partner9.player_1, "player_2" to partner9.player_2, "create_date" to Date().toString())
+            db.insert("Partner", "id" to partner10.id, "player_1" to partner10.player_1, "player_2" to partner10.player_2, "create_date" to Date().toString())
 //        }
 
     }
