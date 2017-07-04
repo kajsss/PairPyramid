@@ -21,26 +21,11 @@ class MakeEntryPresenter constructor(override var view : MakeEntryContract.View)
         updateAdapter(playerList)
     }
 
-    override fun matchingPartners(players: List<Player>) : List<Partner>{
+    override fun matchingPartners(checkedPlayerList: List<Player>) : List<Partner>{
 
-        var map = Array(9, {IntArray(9, { i->0 })})
+        var playerIdList = checkedPlayerList.map { it.id } .toTypedArray()
         var resultPartnerList = ArrayList<Partner>()
-        var playerIdList = ArrayList<Int>()
-
-        players.forEach { playerIdList.add(it.id) }
-        val partnerList = partnerDao.selectPartnerListByPlayerIdList(playerIdList)
-
-        partnerList!!.forEach {
-            var player1 = it.player_1
-            var player2 = it.player_2
-
-            if( player1 == player2) {
-                map[player1][player2]++
-                return@forEach
-            }
-            map[player1][player2]++
-            map[player2][player1]++
-        }
+        var map = partnerDao.selectPairCounts()
 
         var completeQueue = ArrayList<Int>()
         (1 .. 8).forEach { current ->
@@ -49,25 +34,24 @@ class MakeEntryPresenter constructor(override var view : MakeEntryContract.View)
             if (!playerIdList.contains(current)) return@forEach
             if (completeQueue.contains(current)) return@forEach //이미 완료된 경우
 
-            if (completeQueue.size+1 == players.size) { //혼자 남은 경우
+            if (completeQueue.size+1 == checkedPlayerList.size) { //혼자 남은 경우
                 completeQueue.add(current)
                 resultPartnerList.add(Partner(current,current))
                 return@forEach
             }
 
-
             var minValue = Int.MAX_VALUE
             var minIndex = -1
-
             (1 .. 8).forEach { target ->
 
+                var count = map[Pair(current, target)] ?: 0
 
-                if (minValue > map[current][target]
+                if (minValue > count
                         && current != target
                         && !completeQueue.contains(target)
                         && playerIdList.contains(target)){
 
-                    minValue = map[current][target]
+                    minValue = count
                     minIndex = target
 
                 }

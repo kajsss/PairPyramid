@@ -35,7 +35,7 @@ class PartnerDao(var context: Context) {
         return cnt
     }
 
-    fun selectPartnerListByPlayerIdList(playerIdList: ArrayList<Int>) :  List<Partner>? {
+    fun selectPartnerListByPlayerIdList(playerIdList: Array<Int>) :  List<Partner>? {
         var partnerList: List<Partner>? = null
 
         database.use{

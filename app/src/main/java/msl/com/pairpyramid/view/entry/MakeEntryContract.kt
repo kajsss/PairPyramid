@@ -10,7 +10,7 @@ interface MakeEntryContract {
         var playerList : List<Player>
 
         fun loadPlayerList(updateAdapter : (List<Player>) -> Unit)
-        fun matchingPartners(players: List<Player>): List<Partner>
+        fun matchingPartners(checkedPlayerList: List<Player>): List<Partner>
     }
 
     interface View {
