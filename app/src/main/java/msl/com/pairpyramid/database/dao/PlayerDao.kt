@@ -14,11 +14,9 @@ class PlayerDao(var context: Context) {
     fun selectAllPlayerList() : List<Player>? {
 
         var playerList : List<Player>? = null
-
         database.use {
             playerList = select("Player").parseList(PlayerRowParser())
         }
-
         return playerList
     }
 }
