@@ -61,10 +61,8 @@ open class PyramidView : LinearLayout {
             var newLine  = getNewLine(context)
             for(j in 1..i){
                 var count = pairCountsHashMap[Pair(j, playersCount - i + j )]
-                if(count == null) {
-                    count = 0
-                }
-                newLine.addView(PyramidTriangle(context, getTriangleSize(), getFontSize(), count!!))
+
+                newLine.addView(PyramidTriangle(context, getTriangleSize(), getFontSize(), count ?: 0))
             }
             layout_pyramid.addView(newLine)
         }
