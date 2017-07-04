@@ -23,45 +23,30 @@ class MakeEntryPresenter constructor(override var view : MakeEntryContract.View)
 
     override fun matchingPartners(checkedPlayerList: List<Player>) : List<Partner>{
 
+
         var playerIdList = checkedPlayerList.map { it.id } .toTypedArray()
         var resultPartnerList = ArrayList<Partner>()
-        var map = partnerDao.selectPairCounts()
+        var map = partnerDao.selectPairStatistics()
 
         var completeQueue = ArrayList<Int>()
-        (1 .. 8).forEach { current ->
-            // 최소값인 상대랑 매핑 후 완료 큐에 밀어 넣음
+        map.forEach { (t, u) ->
+            if(completeQueue.size >= playerIdList.size-1) return@forEach
+            if(!playerIdList.contains(t.first) || !playerIdList.contains(t.second)) return@forEach
+            if(completeQueue.contains(t.first) || completeQueue.contains(t.second)) return@forEach
+            if(t.first == t.second) return@forEach
 
-            if (!playerIdList.contains(current)) return@forEach
-            if (completeQueue.contains(current)) return@forEach //이미 완료된 경우
-
-            if (completeQueue.size+1 == checkedPlayerList.size) { //혼자 남은 경우
-                completeQueue.add(current)
-                resultPartnerList.add(Partner(current,current))
-                return@forEach
-            }
-
-            var minValue = Int.MAX_VALUE
-            var minIndex = -1
-            (1 .. 8).forEach { target ->
-
-                var count = map[Pair(current, target)] ?: 0
-
-                if (minValue > count
-                        && current != target
-                        && !completeQueue.contains(target)
-                        && playerIdList.contains(target)){
-
-                    minValue = count
-                    minIndex = target
-
-                }
-            }
-
-            completeQueue.add(current)
-            completeQueue.add(minIndex)
-            resultPartnerList.add(Partner(current,minIndex))
+            completeQueue.add(t.first)
+            completeQueue.add(t.second)
+            resultPartnerList.add(Partner(t.first, t.second))
         }
 
+        if(completeQueue.size != playerIdList.size) {
+            playerIdList.filter { !completeQueue.contains(it) }.forEach { soloPlayer ->
+                completeQueue.add(soloPlayer)
+                completeQueue.add(soloPlayer)
+                resultPartnerList.add(Partner(soloPlayer, soloPlayer))
+            }
+        }
 
         resultPartnerList.forEach { it -> partnerDao.insertPartner(it) }  // result Insert
         return resultPartnerList

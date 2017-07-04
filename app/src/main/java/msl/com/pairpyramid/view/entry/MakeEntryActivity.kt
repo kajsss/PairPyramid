@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log.d
 import kotlinx.android.synthetic.main.activity_make_entry.*
 import msl.com.pairpyramid.R
 import msl.com.pairpyramid.view.adapter.PlayerListAdapter
@@ -37,7 +36,7 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
         btn_ok.setOnClickListener {
             var matchingPartners = makeEntryPresenter.matchingPartners(playerListAdapter.item!!.filter { it.checked == true })
             matchingPartners.forEach { it ->
-                d("# " , it.toString())
+//                d("# " , it.toString())
             }
         }
 

@@ -6,9 +6,8 @@ import android.util.Log.d
 import msl.com.pairpyramid.model.Partner
 import msl.com.pairpyramid.model.Player
 import org.jetbrains.anko.db.*
-import java.util.*
 
-class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairPyramidDatabase", null, 7) {
+class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairPyramidDatabase", null, 9) {
 
     companion object {
         private var instance: DatabaseHelper? = null
@@ -41,7 +40,7 @@ class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairP
 
     private fun createPlayerTable(db: SQLiteDatabase) {
         db.createTable("Player", true,
-                "id" to INTEGER + PRIMARY_KEY ,
+                "id" to INTEGER + PRIMARY_KEY,
                 "name" to TEXT,
                 "email" to TEXT,
                 "useYn" to INTEGER).run {
@@ -50,7 +49,7 @@ class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairP
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        if(oldVersion < newVersion){
+        if (oldVersion < newVersion) {
             db.dropTable("Player")
             db.dropTable("Partner")
             createPlayerTable(db)
@@ -92,15 +91,15 @@ class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairP
         db.insert("Player", "id" to player8.id, "name" to player8.name, "email" to player8.email, "useYn" to 1)
 
         //Insert Partner Data
-        db.insert("Partner", "id" to partner1.id, "player_1" to partner1.player_1, "player_2" to partner1.player_2, "create_date" to Date().toString())
-        db.insert("Partner", "id" to partner2.id, "player_1" to partner2.player_1, "player_2" to partner2.player_2, "create_date" to Date().toString())
-        db.insert("Partner", "id" to partner3.id, "player_1" to partner3.player_1, "player_2" to partner3.player_2, "create_date" to Date().toString())
-        db.insert("Partner", "id" to partner4.id, "player_1" to partner4.player_1, "player_2" to partner4.player_2, "create_date" to Date().toString())
-        db.insert("Partner", "id" to partner5.id, "player_1" to partner5.player_1, "player_2" to partner5.player_2, "create_date" to Date().toString())
-        db.insert("Partner", "id" to partner6.id, "player_1" to partner6.player_1, "player_2" to partner6.player_2, "create_date" to Date().toString())
-        db.insert("Partner", "id" to partner7.id, "player_1" to partner7.player_1, "player_2" to partner7.player_2, "create_date" to Date().toString())
-        db.insert("Partner", "id" to partner8.id, "player_1" to partner8.player_1, "player_2" to partner8.player_2, "create_date" to Date().toString())
-        db.insert("Partner", "id" to partner9.id, "player_1" to partner9.player_1, "player_2" to partner9.player_2, "create_date" to Date().toString())
-        db.insert("Partner", "id" to partner0.id, "player_1" to partner0.player_1, "player_2" to partner0.player_2, "create_date" to Date().toString())
+        db.insert("Partner", "id" to partner1.id, "player_1" to partner1.player_1, "player_2" to partner1.player_2, "create_date" to partner1.createDate)
+        db.insert("Partner", "id" to partner2.id, "player_1" to partner2.player_1, "player_2" to partner2.player_2, "create_date" to partner2.createDate)
+        db.insert("Partner", "id" to partner3.id, "player_1" to partner3.player_1, "player_2" to partner3.player_2, "create_date" to partner3.createDate)
+        db.insert("Partner", "id" to partner4.id, "player_1" to partner4.player_1, "player_2" to partner4.player_2, "create_date" to partner4.createDate)
+        db.insert("Partner", "id" to partner5.id, "player_1" to partner5.player_1, "player_2" to partner5.player_2, "create_date" to partner5.createDate)
+        db.insert("Partner", "id" to partner6.id, "player_1" to partner6.player_1, "player_2" to partner6.player_2, "create_date" to partner6.createDate)
+        db.insert("Partner", "id" to partner7.id, "player_1" to partner7.player_1, "player_2" to partner7.player_2, "create_date" to partner7.createDate)
+        db.insert("Partner", "id" to partner8.id, "player_1" to partner8.player_1, "player_2" to partner8.player_2, "create_date" to partner8.createDate)
+        db.insert("Partner", "id" to partner9.id, "player_1" to partner9.player_1, "player_2" to partner9.player_2, "create_date" to partner9.createDate)
+        db.insert("Partner", "id" to partner0.id, "player_1" to partner0.player_1, "player_2" to partner0.player_2, "create_date" to partner0.createDate)
     }
 }
