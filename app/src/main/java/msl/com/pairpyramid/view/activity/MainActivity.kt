@@ -23,18 +23,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        findViewById(R.id.btn_matching).setOnClickListener { v ->
+            startActivity<MakeEntryActivity>()
+        }
+    }
+
+    private var pyramidView : PyramidView? = null
+
+    override fun onResume() {
+        super.onResume()
+
         playerNameList = PlayerDao(this).selectAllPlayerList()!!
                 .map{it.name}
                 .toTypedArray()
         pairCountsHashMap = PartnerDao(this).selectPairCounts()
 
-        main_layout.addView(PyramidView(this@MainActivity, playerNameList, pairCountsHashMap), INSERT_INDEX)
-
-        findViewById(R.id.btn_matching).setOnClickListener { v ->
-            startActivity<MakeEntryActivity>()
-        }
-
+        if(pyramidView != null)
+          main_layout.removeView(pyramidView)
+        pyramidView = PyramidView(this@MainActivity, playerNameList, pairCountsHashMap)
+        main_layout.addView(pyramidView, INSERT_INDEX)
     }
-
 }
 
