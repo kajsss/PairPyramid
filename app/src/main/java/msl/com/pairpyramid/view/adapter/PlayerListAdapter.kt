@@ -4,9 +4,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import kotlinx.android.synthetic.main.item_player_list.view.*
 import msl.com.pairpyramid.R
 import msl.com.pairpyramid.model.Player
+import org.jetbrains.anko.imageBitmap
 
 class PlayerListAdapter : RecyclerView.Adapter<PlayerListAdapter.ViewHolder>() {
 
@@ -29,6 +31,11 @@ class PlayerListAdapter : RecyclerView.Adapter<PlayerListAdapter.ViewHolder>() {
         fun bind(player: Player) = with(itemView) {
             userName.text = player.name
             userEmail.text = player.email
+            if(player.picture != null){
+                userPicture.imageTintList = null
+                userPicture.scaleType = ImageView.ScaleType.FIT_XY
+                userPicture.imageBitmap = player.picture
+            }
 
             setOnClickListener {
                 player.checked = if(player.checked) false else true

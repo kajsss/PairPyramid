@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_player"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="msl.com.pairpyramid.view.player.AddPlayerActivity"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+        <ImageView
+            android:id="@+id/img_picture"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:tint="@color/DimGray"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_portrait_black"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_add_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/ico_name"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:tint="@color/DimGray"
+            android:layout_marginLeft="50dp"
+            android:src="@drawable/ic_assignment_ind_black" />
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/ico_name"
+            android:text="Name : "
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:textSize="15sp"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/text_name"
+            android:hint="Player Name"
+            android:imeOptions="actionDone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_add_email"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/ico_email"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:tint="@color/DimGray"
+            android:layout_marginLeft="50dp"
+            android:src="@drawable/ic_mail_black" />
+
+        <TextView
+            android:id="@+id/text_email"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/ico_email"
+            android:text="Email : "
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edit_email"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:textSize="15sp"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/text_email"
+            android:hint="Player Email"
+            android:imeOptions="actionDone" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/layout_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        >
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@color/DimGray"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="Cancel"/>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/btn_cancel"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textStyle="bold"
+            android:background="@color/DimGray"
+            android:textColor="@color/white"
+            android:text="OK"/>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
+

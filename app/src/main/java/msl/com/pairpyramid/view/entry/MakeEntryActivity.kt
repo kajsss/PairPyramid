@@ -6,12 +6,20 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_make_entry.*
 import msl.com.pairpyramid.R
+import msl.com.pairpyramid.database.dao.PlayerDao
 import msl.com.pairpyramid.view.adapter.PlayerListAdapter
+import msl.com.pairpyramid.view.player.AddPlayerActivity
+import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
+
 
 class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
 
+
     lateinit var makeEntryPresenter: MakeEntryPresenter
     lateinit var playerListAdapter: PlayerListAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,21 +37,41 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
         }
 
 
-        btn_cancel.setOnClickListener {
+        btn_cancel.onClick{
             moveToMainActivity()
         }
 
-        btn_ok.setOnClickListener {
+        btn_save.onClick {
             var matchingPartners = makeEntryPresenter.matchingPartners(playerListAdapter.item!!.filter { it.checked == true })
             matchingPartners.forEach { it ->
-//                d("# " , it.toString())
             }
+        }
+
+        btn_add.onClick {
+            moveToAddPlayerActivity()
         }
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        makeEntryPresenter.loadPlayerList { playerList ->
+            playerListAdapter.apply { item = playerList }
+            playerListAdapter.notifyDataSetChanged()
+        }
+    }
+
     fun moveToMainActivity() {
         finish()
+    }
+
+    fun moveToAddPlayerActivity() {
+
+        val  playerList = PlayerDao(this).selectAllPlayerList()
+        if( playerList == null ) startActivity<AddPlayerActivity>()
+        if( playerList!!.size < 8) startActivity<AddPlayerActivity>()
+        else toast("Maximum player number is 8 !")
+
     }
 
     override fun getContext(): Context {
