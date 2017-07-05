@@ -11,6 +11,8 @@ interface MakeEntryContract {
 
         fun loadPlayerList(updateAdapter : (List<Player>) -> Unit)
         fun matchingPartners(checkedPlayerList: List<Player>): List<Partner>
+        fun insertPartners(matchingPartners: List<Partner>)
+        fun getPartnerText(partner: Partner): String
     }
 
     interface View {

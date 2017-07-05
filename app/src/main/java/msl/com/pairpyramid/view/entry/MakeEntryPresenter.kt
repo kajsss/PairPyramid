@@ -48,7 +48,14 @@ class MakeEntryPresenter constructor(override var view : MakeEntryContract.View)
             }
         }
 
-        resultPartnerList.forEach { it -> partnerDao.insertPartner(it) }  // result Insert
         return resultPartnerList
+    }
+
+    override fun insertPartners(matchingPartners: List<Partner>) {
+        matchingPartners.forEach { it -> partnerDao.insertPartner(it) }
+    }
+
+    override fun getPartnerText(partner: Partner): String {
+        return playerDao.selectPlayerNameById(partner.player_1) + " ♡ " + playerDao.selectPlayerNameById(partner.player_2)
     }
 }
