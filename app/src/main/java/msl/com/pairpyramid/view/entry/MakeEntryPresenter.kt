@@ -56,6 +56,9 @@ class MakeEntryPresenter constructor(override var view : MakeEntryContract.View)
     }
 
     override fun getPartnerText(partner: Partner): String {
-        return playerDao.selectPlayerNameById(partner.player_1) + " ♡ " + playerDao.selectPlayerNameById(partner.player_2)
+        return when(partner.player_1 == partner.player_2) {
+            true -> playerDao.selectPlayerNameById(partner.player_1) + " Solo!! "
+            else -> playerDao.selectPlayerNameById(partner.player_1) + " ♡ " + playerDao.selectPlayerNameById(partner.player_2)
+        }
     }
 }

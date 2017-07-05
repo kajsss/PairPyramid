@@ -7,6 +7,7 @@ import msl.com.pairpyramid.R
 import msl.com.pairpyramid.custom.PyramidView
 import msl.com.pairpyramid.database.dao.PartnerDao
 import msl.com.pairpyramid.database.dao.PlayerDao
+import msl.com.pairpyramid.model.PyramidInfo
 import msl.com.pairpyramid.view.entry.MakeEntryActivity
 import org.jetbrains.anko.startActivity
 
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     private val INSERT_INDEX = 1
 
     lateinit var playerNameList: Array<String>
-    lateinit var pairCountsHashMap: HashMap<Pair<Int, Int>, Int>
+    lateinit var pairCountsHashMap: HashMap<Pair<Int, Int>, PyramidInfo>
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

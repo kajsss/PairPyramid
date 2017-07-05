@@ -1,5 +1,8 @@
 package msl.com.pairpyramid.model
 
-/**
- * Created by devcraft17 on 05/07/2017.
- */
+data class PyramidInfo(var count:Int?=0, var recentlyPaired:Boolean?=false) {
+
+    fun inc() {
+        count = count!! + 1
+    }
+}
