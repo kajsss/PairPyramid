@@ -7,7 +7,7 @@ import msl.com.pairpyramid.model.Partner
 import msl.com.pairpyramid.model.Player
 import org.jetbrains.anko.db.*
 
-class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairPyramidDatabase", null, 12) {
+class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairPyramidDatabase", null, 13) {
 
     companion object {
         private var instance: DatabaseHelper? = null

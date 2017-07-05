@@ -7,11 +7,11 @@ import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_make_entry.*
 import msl.com.pairpyramid.R
 import msl.com.pairpyramid.database.dao.PlayerDao
+import msl.com.pairpyramid.model.Partner
 import msl.com.pairpyramid.view.adapter.PlayerListAdapter
 import msl.com.pairpyramid.view.player.AddPlayerActivity
+import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 
 
 class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
@@ -37,11 +37,15 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
         }
 
 
-        btn_cancel.onClick{
+        findViewById(R.id.btn_cancel).onClick{
             moveToMainActivity()
         }
 
-        btn_save.setOnClickListener {
+        findViewById(R.id.btn_add).onClick {
+            moveToAddPlayerActivity()
+        }
+
+        findViewById(R.id.btn_save).onClick {
             var matchingPartners = makeEntryPresenter.matchingPartners(playerListAdapter.item!!.filter { it.checked == true })
             showMatchingResultPopup(matchingPartners)
         }
@@ -69,9 +73,6 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
             }
         }.show()
 
-        btn_add.onClick {
-            moveToAddPlayerActivity()
-        }
 
     }
 
