@@ -5,6 +5,8 @@ import msl.com.pairpyramid.database.DatabaseHelper
 import msl.com.pairpyramid.database.parser.PartnerRowParser
 import msl.com.pairpyramid.model.PairStatistics
 import msl.com.pairpyramid.model.Partner
+import msl.com.pairpyramid.model.PyramidInfo
+import org.jetbrains.anko.db.SqlOrderDirection
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 import java.util.*
@@ -17,7 +19,7 @@ class PartnerDao(var context: Context) {
     fun selectAllPartnerList(): List<Partner>? {
         var partnerList: List<Partner>? = null
         database.use {
-            partnerList = select("Partner").parseList(PartnerRowParser())
+            partnerList = select("Partner").orderBy("create_date", SqlOrderDirection.DESC).parseList(PartnerRowParser())
         }
         return partnerList
     }
@@ -36,16 +38,20 @@ class PartnerDao(var context: Context) {
         return cnt
     }
 
-    fun selectPairCounts() : HashMap<Pair<Int, Int>, Int> {
+    fun selectPairCounts() : HashMap<Pair<Int, Int>, PyramidInfo> {
         var allPartnerList = selectAllPartnerList()
-        var pairCountHashMap : HashMap<Pair<Int, Int>, Int> = hashMapOf()
+        var pairCountHashMap : HashMap<Pair<Int, Int>, PyramidInfo> = hashMapOf()
 
         allPartnerList?.forEach{
             if(pairCountHashMap[Pair(it.player_1, it.player_2)] == null) {
-                pairCountHashMap[Pair(it.player_1, it.player_2)] = 1}
-            else{
-                pairCountHashMap.set(Pair(it.player_1, it.player_2), pairCountHashMap[Pair(it.player_1, it.player_2)]!!.inc())
+                pairCountHashMap[Pair(it.player_1, it.player_2)] = PyramidInfo(1)}
+            else {
+                pairCountHashMap[Pair(it.player_1, it.player_2)]!!.inc()
             }
+        }
+
+        allPartnerList!!.filter { it.createDate == allPartnerList!!.get(0).createDate }.forEach {
+            pairCountHashMap[Pair(it.player_1, it.player_2)]?.recentlyPaired = true
         }
 
         return pairCountHashMap
@@ -67,17 +73,6 @@ class PartnerDao(var context: Context) {
             var pairStatistics = PairStatistics(pairStatisticsHashMap[Pair(it.player_1, it.player_2)]!!.count.inc(), it.createDate)
             pairStatisticsHashMap.set(Pair(it.player_1, it.player_2), pairStatistics)
         }
-
-//        allPartnerList.forEach { println(it.toString() + " : " + it.createDate) }
-//
-//        println(pairStatisticsHashMap.size.toString())
-//
-//        pairStatisticsHashMap.toSortedMap(compareBy { pairStatisticsHashMap[it] }).forEach { (t, u) -> println(t.first.toString() + "," + t.second.toString() + " -> " + u.toString()
-//        ) }
-//
-////        pairStatisticsHashMap.
-//
-//        println(pairStatisticsHashMap.toSortedMap(compareBy { pairStatisticsHashMap[it] }).size.toString())
 
         return pairStatisticsHashMap.toSortedMap(compareBy { pairStatisticsHashMap[it] })
 

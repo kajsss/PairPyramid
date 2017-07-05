@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.pyramid_layout.view.*
 import msl.com.pairpyramid.R
+import msl.com.pairpyramid.model.PyramidInfo
 
 
 open class PyramidView : LinearLayout {
 
     var playersCount = 5 // Default Player Count
     lateinit var nameList : Array<String>
-    lateinit var pairCountsHashMap: HashMap<Pair<Int, Int>, Int>
+    lateinit var pairCountsHashMap: HashMap<Pair<Int, Int>, PyramidInfo>
 
 
     constructor(context: Context) : super(context) {
@@ -40,7 +41,7 @@ open class PyramidView : LinearLayout {
         drawPyramid()
     }
 
-    constructor(context: Context, nameList: Array<String>, pairCountsHashMap : HashMap<Pair<Int, Int>, Int>) : super(context) {
+    constructor(context: Context, nameList: Array<String>, pairCountsHashMap : HashMap<Pair<Int, Int>, PyramidInfo>) : super(context) {
         this.playersCount = nameList.size
         this.nameList = nameList
         this.pairCountsHashMap = pairCountsHashMap
@@ -55,14 +56,13 @@ open class PyramidView : LinearLayout {
     }
 
     private fun drawPyramid() {
-
         //draw pyramid
         for(i in 1..playersCount){
             var newLine  = getNewLine(context)
             for(j in 1..i){
-                var count = pairCountsHashMap[Pair(j, playersCount - i + j )]
+                var pyramidInfo = pairCountsHashMap[Pair(j, playersCount - i + j )]?: PyramidInfo()
 
-                newLine.addView(PyramidTriangle(context, getTriangleSize(), getFontSize(), count ?: 0))
+                newLine.addView(PyramidTriangle(context, getTriangleSize(), getFontSize(), pyramidInfo))
             }
             layout_pyramid.addView(newLine)
         }
@@ -70,7 +70,6 @@ open class PyramidView : LinearLayout {
         for(i in 0..(playersCount-1)){
             layout_name.addView(PyramidName(context,getTriangleSize(),nameList[i]))
         }
-
     }
 
     private fun  getFontSize(): Int {
@@ -98,6 +97,4 @@ open class PyramidView : LinearLayout {
         linLayout.layoutParams = linLayoutParam
         return linLayout
     }
-
-
 }

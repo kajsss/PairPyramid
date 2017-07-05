@@ -24,6 +24,18 @@ class PlayerDao(var context: Context) {
         return playerList
     }
 
+    fun selectPlayerNameById(id: Int) : String {
+
+        var name : String = ""
+        database.use {
+            select("Player", "name").whereArgs("id = $id").exec {
+                moveToNext()
+                name = getString(0)
+            }
+        }
+        return name
+    }
+
 
     fun insertPlayer(player: Player): Long {
 
@@ -41,5 +53,4 @@ class PlayerDao(var context: Context) {
         }
 
     }
-
 }

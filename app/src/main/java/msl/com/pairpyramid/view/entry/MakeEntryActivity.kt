@@ -41,11 +41,33 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
             moveToMainActivity()
         }
 
-        btn_save.onClick {
+        btn_save.setOnClickListener {
             var matchingPartners = makeEntryPresenter.matchingPartners(playerListAdapter.item!!.filter { it.checked == true })
-            matchingPartners.forEach { it ->
-            }
+            showMatchingResultPopup(matchingPartners)
         }
+
+    }
+
+    private fun showMatchingResultPopup(matchingPartners: List<Partner>) {
+
+        alert {
+            title = "Matching Result"
+            customView {
+                verticalLayout {
+                    padding = 80
+                    matchingPartners.forEach { partner ->
+                        textView {
+                            text = makeEntryPresenter.getPartnerText(partner)
+                        }
+                    }
+                    negativeButton("Rematching") {  }
+                    positiveButton("Ok") {
+                        makeEntryPresenter.insertPartners(matchingPartners)
+                        moveToMainActivity()
+                    }
+                }
+            }
+        }.show()
 
         btn_add.onClick {
             moveToAddPlayerActivity()
