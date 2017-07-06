@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory
 
 data class Player constructor(var id : Int, var name : String, var email : String){
 
-
     constructor(id : Int,name : String, email : String, useYn : Boolean ) : this(id,name,email){
         this.useYn = useYn
     }

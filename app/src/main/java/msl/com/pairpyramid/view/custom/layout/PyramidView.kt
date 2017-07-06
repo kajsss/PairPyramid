@@ -55,14 +55,12 @@ open class PyramidView : LinearLayout {
     }
 
     private fun drawPyramid() {
-
-        // list (순서보장) useYn = Y
-        //
         //draw pyramid
         for(i in 1..playersCount){
             var newLine  = getNewLine(context)
             for(j in 1..i){
                 var pyramidInfo = pairCountsHashMap[Pair(j, playersCount - i + j )]?: PyramidInfo()
+
                 newLine.addView(PyramidTriangle(context, getTriangleSize(), getFontSize(), pyramidInfo))
             }
             layout_pyramid.addView(newLine)

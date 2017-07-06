@@ -18,5 +18,4 @@ class PairPyramidPresenter constructor(override var view: PairPyramidContract.Vi
 
         view.drawPyramid(activePlayerNameList, pairCountsHashMap)
     }
-
 }
