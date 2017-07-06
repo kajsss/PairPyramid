@@ -15,9 +15,9 @@ class PlayerDao(var context: Context) {
     val database: DatabaseHelper
         get() = DatabaseHelper.getInstance(context.applicationContext)
 
-    fun selectAllPlayerList(): List<Player>? {
+    fun selectAllPlayerList(): List<Player> {
 
-        var playerList: List<Player>? = null
+        var playerList: List<Player> = arrayListOf()
         database.use {
             playerList = select("Player").parseList(PlayerRowParser())
         }

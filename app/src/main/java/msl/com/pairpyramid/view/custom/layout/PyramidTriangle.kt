@@ -1,4 +1,4 @@
-package msl.com.pairpyramid.custom
+package msl.com.pairpyramid.view.custom.layout
 
 import android.content.Context
 import android.graphics.Typeface

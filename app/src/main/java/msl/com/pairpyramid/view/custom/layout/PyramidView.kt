@@ -1,4 +1,4 @@
-package msl.com.pairpyramid.custom
+package msl.com.pairpyramid.view.custom.layout
 
 import android.content.Context
 import android.util.AttributeSet
@@ -51,7 +51,6 @@ open class PyramidView : LinearLayout {
 
 
     private fun initView() {
-        setBackgroundColor(R.color.background_material_light)
         LayoutInflater.from(context).inflate(R.layout.pyramid_layout, this);
     }
 
@@ -67,8 +66,8 @@ open class PyramidView : LinearLayout {
             layout_pyramid.addView(newLine)
         }
         //draw Name list
-        for(i in 0..(playersCount-1)){
-            layout_name.addView(PyramidName(context,getTriangleSize(),nameList[i]))
+        for(i in 0 until playersCount){
+            layout_name.addView(PyramidName(context, getTriangleSize(), nameList[i]))
         }
     }
 

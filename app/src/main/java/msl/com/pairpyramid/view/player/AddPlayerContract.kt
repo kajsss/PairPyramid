@@ -16,7 +16,6 @@ interface AddPlayerContract {
             val INSERT_ERROR_MESSAGE = 2
         }
 
-
         fun getContext() : android.content.Context
         fun takePicture()
         fun showErrorMessage(errorCode : Int)

@@ -38,6 +38,7 @@ class AddPlayerActivity : AppCompatActivity(), AddPlayerContract.View{
         }
 
         btn_save.onClick {
+
             if( edit_name.length()>0 && edit_email.length() > 0){
                 addPlayerPresenter.addPlayer( edit_name.text.toString(), edit_email.text.toString() , mBitmapImage)
             }else{

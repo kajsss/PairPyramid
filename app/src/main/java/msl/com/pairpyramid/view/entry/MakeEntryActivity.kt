@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_make_entry.*
 import msl.com.pairpyramid.R
 import msl.com.pairpyramid.database.dao.PlayerDao
 import msl.com.pairpyramid.model.Partner
-import msl.com.pairpyramid.view.adapter.PlayerListAdapter
+import msl.com.pairpyramid.view.custom.adapter.PlayerListAdapter
 import msl.com.pairpyramid.view.player.AddPlayerActivity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -32,12 +32,14 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
         playerRecyclerView.adapter = playerListAdapter
 
         makeEntryPresenter.loadPlayerList { playerList ->
-            playerListAdapter.apply { item = playerList }
+            playerListAdapter.item = playerList
             playerListAdapter.notifyDataSetChanged()
         }
 
 
-        findViewById(R.id.btn_cancel).onClick{
+
+
+        findViewById(R.id.btn_cancel).onClick {
             moveToMainActivity()
         }
 
@@ -91,8 +93,7 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
     fun moveToAddPlayerActivity() {
 
         val  playerList = PlayerDao(this).selectAllPlayerList()
-        if( playerList == null ) startActivity<AddPlayerActivity>()
-        if( playerList!!.size < 8) startActivity<AddPlayerActivity>()
+        if( playerList.size < 8) startActivity<AddPlayerActivity>()
         else toast("Maximum player number is 8 !")
 
     }

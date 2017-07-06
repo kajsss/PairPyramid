@@ -1,4 +1,4 @@
-package msl.com.pairpyramid.view.adapter
+package msl.com.pairpyramid.view.custom.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

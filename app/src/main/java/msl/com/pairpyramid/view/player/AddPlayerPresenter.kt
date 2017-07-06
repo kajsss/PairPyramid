@@ -14,14 +14,14 @@ class AddPlayerPresenter constructor(override var view: AddPlayerContract.View) 
         val selectAllPlayerList = playerDao.selectAllPlayerList()
         //Duplicate email Check
 
-        selectAllPlayerList?.forEach {
+        selectAllPlayerList.forEach {
             if (it.email.equals(email)) {
                 view.showErrorMessage(AddPlayerContract.View.DUPLICATE_ERROR_MESSAGE)
                 return@addPlayer
             }
         }
 
-        var newId = if (selectAllPlayerList == null) 1 else selectAllPlayerList.size + 1
+        var newId = selectAllPlayerList.size + 1
         var newPlayer = Player(newId, name, email)
         if (picture != null) newPlayer.picture = picture
 
