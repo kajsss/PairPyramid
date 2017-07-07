@@ -19,7 +19,7 @@ class PlayerDao(var context: Context) {
 
         var playerList: List<Player> = arrayListOf()
         database.use {
-            playerList = select("Player").parseList(PlayerRowParser())
+            playerList = select("Player").whereArgs("useYn=1").parseList(PlayerRowParser())
         }
         return playerList
     }

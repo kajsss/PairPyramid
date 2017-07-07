@@ -58,20 +58,19 @@ class PartnerDao(var context: Context) {
     }
 
     fun selectPairStatistics() : SortedMap<Pair<Int, Int>, PairStatistics> {
+
         var allPartnerList = selectAllPartnerList()!!.sortedByDescending{
             it.createDate
         }
         var pairStatisticsHashMap : HashMap<Pair<Int, Int>, PairStatistics> = hashMapOf()
 
-        (1 .. 8).forEach { f ->
-            (f .. 8).forEach { s ->
-                pairStatisticsHashMap[Pair(f, s)] = PairStatistics(0, "19000101000000")
-            }
-        }
 
         allPartnerList?.forEach{
-            var pairStatistics = PairStatistics(pairStatisticsHashMap[Pair(it.player_1, it.player_2)]!!.count.inc(), it.createDate)
-            pairStatisticsHashMap.set(Pair(it.player_1, it.player_2), pairStatistics)
+            if(pairStatisticsHashMap[Pair(it.player_1, it.player_2)] == null){
+                pairStatisticsHashMap[Pair(it.player_1, it.player_2)] = PairStatistics(0, "19000101000000")
+            }
+                var pairStatistics = PairStatistics(pairStatisticsHashMap[Pair(it.player_1, it.player_2)]!!.count.inc(), it.createDate)
+                pairStatisticsHashMap.set(Pair(it.player_1, it.player_2), pairStatistics)
         }
 
         return pairStatisticsHashMap.toSortedMap(compareBy { pairStatisticsHashMap[it] })

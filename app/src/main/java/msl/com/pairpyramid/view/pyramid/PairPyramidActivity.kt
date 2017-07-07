@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import msl.com.pairpyramid.R
+import msl.com.pairpyramid.model.Player
 import msl.com.pairpyramid.model.PyramidInfo
 import msl.com.pairpyramid.view.custom.layout.PyramidView
 import msl.com.pairpyramid.view.entry.MakeEntryActivity
@@ -39,11 +40,11 @@ class PairPyramidActivity : AppCompatActivity(), PairPyramidContract.View {
         pairPyramidPresenter.getPairPyramidData()
     }
 
-    override fun drawPyramid(activePlayerNameList: Array<String>, pairCountsHashMap: HashMap<Pair<Int, Int>, PyramidInfo>) {
+    override fun drawPyramid(activePlayerList: Array<Player>, pairCountsHashMap: HashMap<Pair<Int, Int>, PyramidInfo>) {
         if(pyramidView != null){
             main_layout.removeView(pyramidView)
         }
-        pyramidView = PyramidView(this@PairPyramidActivity, activePlayerNameList, pairCountsHashMap)
+        pyramidView = PyramidView(this@PairPyramidActivity, activePlayerList, pairCountsHashMap)
         main_layout.addView(pyramidView, INSERT_INDEX)
     }
 }

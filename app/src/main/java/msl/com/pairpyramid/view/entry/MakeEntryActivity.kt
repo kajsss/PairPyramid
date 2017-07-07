@@ -36,9 +36,6 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
             playerListAdapter.notifyDataSetChanged()
         }
 
-
-
-
         findViewById(R.id.btn_cancel).onClick {
             moveToMainActivity()
         }
@@ -74,8 +71,6 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
                 }
             }
         }.show()
-
-
     }
 
     override fun onResume() {

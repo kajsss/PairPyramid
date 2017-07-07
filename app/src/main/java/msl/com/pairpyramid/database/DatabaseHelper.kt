@@ -7,7 +7,7 @@ import msl.com.pairpyramid.model.Partner
 import msl.com.pairpyramid.model.Player
 import org.jetbrains.anko.db.*
 
-class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairPyramidDatabase", null, 13) {
+class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairPyramidDatabase", null, 15) {
 
     companion object {
         private var instance: DatabaseHelper? = null
@@ -67,6 +67,8 @@ class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairP
         var player4 = Player(4, "Steve", "player4@gmail.com")
         var player5 = Player(5, "Dave", "player5@gmail.com")
         var player6 = Player(6, "Sue", "player6@gmail.com")
+        var player9 = Player(9, "nine", "player9@gmail.com")
+        var player11 = Player(11, "eleven", "player11@gmail.com")
         //var player7 = Player(7, "Kafri", "player7@gmail.com")
         //var player8 = Player(8, "Hubert", "player8@gmail.com")
 
@@ -80,16 +82,23 @@ class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairP
         var partner8 = Partner(player2.id, player4.id)
         var partner9 = Partner(player2.id, player1.id)
         var partner0 = Partner(player1.id, player2.id)
+        var partner10 = Partner(player9.id, player9.id)
+        var partner11 = Partner(player9.id, player11.id)
+        var partner12 = Partner(player2.id, player11.id)
+
 
         //Insert Player Data
         db.insert("Player", "id" to player1.id, "name" to player1.name, "email" to player1.email, "useYn" to 1)
-        db.insert("Player", "id" to player2.id, "name" to player2.name, "email" to player2.email, "useYn" to 1)
+        db.insert("Player", "id" to player2.id, "name" to player2.name, "email" to player2.email, "useYn" to 0)
         db.insert("Player", "id" to player3.id, "name" to player3.name, "email" to player3.email, "useYn" to 1)
         db.insert("Player", "id" to player4.id, "name" to player4.name, "email" to player4.email, "useYn" to 1)
         db.insert("Player", "id" to player5.id, "name" to player5.name, "email" to player5.email, "useYn" to 1)
-        db.insert("Player", "id" to player6.id, "name" to player6.name, "email" to player6.email, "useYn" to 1)
+        db.insert("Player", "id" to player6.id, "name" to player6.name, "email" to player6.email, "useYn" to 0)
         //db.insert("Player", "id" to player7.id, "name" to player7.name, "email" to player7.email, "useYn" to 1)
         //db.insert("Player", "id" to player8.id, "name" to player8.name, "email" to player8.email, "useYn" to 1)
+        db.insert("Player", "id" to player9.id, "name" to player9.name, "email" to player9.email, "useYn" to 1)
+        db.insert("Player", "id" to player11.id, "name" to player11.name, "email" to player11.email, "useYn" to 1)
+
 
         //Insert Partner Data
         db.insert("Partner", "id" to partner1.id, "player_1" to partner1.player_1, "player_2" to partner1.player_2, "create_date" to partner1.createDate)
@@ -102,5 +111,9 @@ class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "PairP
         db.insert("Partner", "id" to partner8.id, "player_1" to partner8.player_1, "player_2" to partner8.player_2, "create_date" to partner8.createDate)
         db.insert("Partner", "id" to partner9.id, "player_1" to partner9.player_1, "player_2" to partner9.player_2, "create_date" to partner9.createDate)
         db.insert("Partner", "id" to partner0.id, "player_1" to partner0.player_1, "player_2" to partner0.player_2, "create_date" to partner0.createDate)
+        db.insert("Partner", "id" to partner10.id, "player_1" to partner10.player_1, "player_2" to partner10.player_2, "create_date" to partner10.createDate)
+        db.insert("Partner", "id" to partner11.id, "player_1" to partner11.player_1, "player_2" to partner11.player_2, "create_date" to partner11.createDate)
+        db.insert("Partner", "id" to partner12.id, "player_1" to partner12.player_1, "player_2" to partner12.player_2, "create_date" to partner12.createDate)
+
     }
 }
