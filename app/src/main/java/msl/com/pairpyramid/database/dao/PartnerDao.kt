@@ -4,6 +4,7 @@ import android.content.Context
 import msl.com.pairpyramid.database.DatabaseHelper
 import msl.com.pairpyramid.database.parser.PartnerRowParser
 import msl.com.pairpyramid.model.Partner
+import msl.com.pairpyramid.model.Player
 import msl.com.pairpyramid.model.PyramidInfo
 import org.jetbrains.anko.db.SqlOrderDirection
 import org.jetbrains.anko.db.insert
@@ -63,13 +64,13 @@ class PartnerDao(var context: Context) {
         }
     }
 
-    fun selectPairStatistics() : SortedMap<Pair<Int, Int>, PyramidInfo> {
+    fun selectPairStatistics(playerList: List<Player>) : SortedMap<Pair<Int, Int>, PyramidInfo> {
 
         var allPartnerList = selectAllPartnerList()!!.sortedByDescending{
             it.createDate
         }
-        var pairStatisticsHashMap : HashMap<Pair<Int, Int>, PyramidInfo> = hashMapOf()
 
+        var pairStatisticsHashMap: HashMap<Pair<Int, Int>, PyramidInfo> = initPairHashMap(playerList)
 
         allPartnerList?.forEach{
             if(pairStatisticsHashMap[Pair(it.player_1, it.player_2)] == null){
@@ -81,5 +82,18 @@ class PartnerDao(var context: Context) {
 
         return pairStatisticsHashMap.toSortedMap(compareBy { pairStatisticsHashMap[it] })
 
+    }
+
+    private fun initPairHashMap(playerList: List<Player>): HashMap<Pair<Int, Int>, PyramidInfo> {
+        var pairStatisticsHashMap: HashMap<Pair<Int, Int>, PyramidInfo> = hashMapOf()
+
+        playerList.map { it.id }.forEach { f ->
+            playerList.map { it.id }.forEach { s ->
+                if (f < s) {
+                    pairStatisticsHashMap[Pair(f, s)] = PyramidInfo(0, false, "19000101000000")
+                }
+            }
+        }
+        return pairStatisticsHashMap
     }
 }
