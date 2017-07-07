@@ -28,7 +28,8 @@
         <activity
             android:name=".view.entry.MakeEntryActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.player.AddPlayerActivity"></activity>
+        <activity android:name=".view.player.AddPlayerActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -4,11 +4,13 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.helper.ItemTouchHelper
 import kotlinx.android.synthetic.main.activity_make_entry.*
 import msl.com.pairpyramid.R
 import msl.com.pairpyramid.database.dao.PlayerDao
 import msl.com.pairpyramid.model.Partner
 import msl.com.pairpyramid.view.custom.adapter.PlayerListAdapter
+import msl.com.pairpyramid.view.custom.adapter.PlayerListItemTouchHelperCallback
 import msl.com.pairpyramid.view.player.AddPlayerActivity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -25,19 +27,18 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_make_entry)
 
-        playerListAdapter = PlayerListAdapter()
+        playerListAdapter = PlayerListAdapter(this)
         playerRecyclerView.layoutManager = LinearLayoutManager(this)
 
         makeEntryPresenter = MakeEntryPresenter(this)
         playerRecyclerView.adapter = playerListAdapter
+        var helper = ItemTouchHelper(PlayerListItemTouchHelperCallback(playerListAdapter))
+        helper.attachToRecyclerView(playerRecyclerView)
 
         makeEntryPresenter.loadPlayerList { playerList ->
             playerListAdapter.item = playerList
             playerListAdapter.notifyDataSetChanged()
         }
-
-
-
 
         findViewById(R.id.btn_cancel).onClick {
             moveToMainActivity()
@@ -51,7 +52,6 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
             var matchingPartners = makeEntryPresenter.matchingPartners(playerListAdapter.item!!.filter { it.checked == true })
             showMatchingResultPopup(matchingPartners)
         }
-
     }
 
     private fun showMatchingResultPopup(matchingPartners: List<Partner>) {
@@ -75,16 +75,9 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
             }
         }.show()
 
-
     }
 
-    override fun onResume() {
-        super.onResume()
-        makeEntryPresenter.loadPlayerList { playerList ->
-            playerListAdapter.apply { item = playerList }
-            playerListAdapter.notifyDataSetChanged()
-        }
-    }
+
 
     fun moveToMainActivity() {
         finish()
