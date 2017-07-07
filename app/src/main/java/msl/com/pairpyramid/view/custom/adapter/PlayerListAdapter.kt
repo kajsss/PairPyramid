@@ -2,6 +2,7 @@ package msl.com.pairpyramid.view.custom.adapter
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapShader
 import android.graphics.Canvas
@@ -19,22 +20,21 @@ import msl.com.pairpyramid.view.entry.MakeEntryActivity
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 
-class PlayerListAdapter constructor(): RecyclerView.Adapter<PlayerListAdapter.ViewHolder>() {
+class PlayerListAdapter constructor() : RecyclerView.Adapter<PlayerListAdapter.ViewHolder>() {
 
     var item: List<Player>? = null
     var removedPosition: Int = -1
-    var context : Context? = null
-    lateinit  var deleteListener : MakeEntryActivity.DeleteItemListener
+    var context: Context? = null
+    lateinit var deleteListener: MakeEntryActivity.DeleteItemListener
 
-    constructor(context : Context) : this() {
+    constructor(context: Context) : this() {
         this.context = context
     }
 
-    constructor(context : Context , listener : MakeEntryActivity.DeleteItemListener) : this() {
+    constructor(context: Context, listener: MakeEntryActivity.DeleteItemListener) : this() {
         this.context = context
         this.deleteListener = listener
     }
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
@@ -61,8 +61,8 @@ class PlayerListAdapter constructor(): RecyclerView.Adapter<PlayerListAdapter.Vi
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(player: Player, removedLayout : Boolean, adapter: PlayerListAdapter, listener: MakeEntryActivity.DeleteItemListener) = with(itemView) {
-            if(removedLayout) {
+        fun bind(player: Player, removedLayout: Boolean, adapter: PlayerListAdapter, listener: MakeEntryActivity.DeleteItemListener) = with(itemView) {
+            if (removedLayout) {
                 user_list_layout.visibility = View.GONE
                 user_list_delete_layout.visibility = View.VISIBLE
 
@@ -73,9 +73,9 @@ class PlayerListAdapter constructor(): RecyclerView.Adapter<PlayerListAdapter.Vi
                         alertDialogBuilder
                                 .setMessage("Are you sure want to delete this Player?")
                                 .setCancelable(true) // True allows you to use the back button to exit the dialog, false does not
-                                .setNegativeButton("CANCEL",DialogInterface.OnClickListener { dialog, which ->
+                                .setNegativeButton("CANCEL", DialogInterface.OnClickListener { dialog, which ->
                                     dialog.dismiss()
-                                }).setPositiveButton("OK",DialogInterface.OnClickListener { dialog, which ->
+                                }).setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
 
                             //Database Delete
                             listener.doAction(player.id)
@@ -109,8 +109,8 @@ class PlayerListAdapter constructor(): RecyclerView.Adapter<PlayerListAdapter.Vi
                     paint.setShader(shader)
                     paint.setAntiAlias(true)
                     val c = Canvas(circleBitmap)
-                    val bitmapWidth : Float = (bitmap.width / 2).toFloat()
-                    val bitmapHeigth : Float = (bitmap.height / 2).toFloat()
+                    val bitmapWidth: Float = (bitmap.width / 2).toFloat()
+                    val bitmapHeigth: Float = (bitmap.height / 2).toFloat()
                     c.drawCircle(bitmapWidth, bitmapHeigth, bitmapWidth, paint)
 
 
@@ -121,10 +121,19 @@ class PlayerListAdapter constructor(): RecyclerView.Adapter<PlayerListAdapter.Vi
                     //user_picture.imageBitmap = player.picture
                 }
 
-                setOnClickListener {
+                layout_check.onClick {
                     player.checked = if (player.checked) false else true
                     user_check.visibility = if (player.checked) View.VISIBLE else View.INVISIBLE
                 }
+
+                layout_keep.onClick {
+                    player.keep = !player.keep
+                    user_keep.imageTintList = when(player.keep) {
+                        true -> null
+                        else -> ColorStateList.valueOf(resources.getColor(R.color.LightGrey))
+                    }
+                }
+
             }
         }
     }

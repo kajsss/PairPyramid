@@ -15,4 +15,5 @@ data class Player constructor(var id : Int, var name : String, var email : Strin
     var useYn : Boolean = true
     var checked : Boolean = true
     var picture : Bitmap? = null
+    var keep: Boolean = false
 }
