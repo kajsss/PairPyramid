@@ -42,9 +42,10 @@ class PlayerDao(var context: Context) {
         var maxId = 0
         database.use {
             select("Player", "id").orderBy("id", SqlOrderDirection.DESC).exec {
-                moveToNext()
-                maxId = getInt(0)
-                println(maxId)
+                if(moveToNext()) {
+                    maxId = getInt(0)
+                    println(maxId)
+                }
             }
         }
         return maxId+1
