@@ -27,7 +27,7 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_make_entry)
 
-        playerListAdapter = PlayerListAdapter(this)
+        playerListAdapter = PlayerListAdapter(this, DeleteItemListener(this))
         playerRecyclerView.layoutManager = LinearLayoutManager(this)
 
         makeEntryPresenter = MakeEntryPresenter(this)
@@ -94,6 +94,12 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
 
     override fun getContext(): Context {
         return this@MakeEntryActivity
+    }
+
+    class DeleteItemListener constructor (var context : Context) {
+        fun doAction(userId : Int) {
+            PlayerDao(context).removePlayer(userId.toString())
+        }
     }
 
 }

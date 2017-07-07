@@ -18,6 +18,7 @@
             android:layout_centerInParent="true"
             android:tint="@color/DimGray"
             android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_portrait_black"/>
     </RelativeLayout>
 

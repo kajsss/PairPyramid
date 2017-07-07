@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_player_list.view.*
 import msl.com.pairpyramid.R
 import msl.com.pairpyramid.model.Player
+import msl.com.pairpyramid.view.entry.MakeEntryActivity
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 
@@ -23,20 +24,27 @@ class PlayerListAdapter constructor(): RecyclerView.Adapter<PlayerListAdapter.Vi
     var item: List<Player>? = null
     var removedPosition: Int = -1
     var context : Context? = null
+    lateinit  var deleteListener : MakeEntryActivity.DeleteItemListener
 
     constructor(context : Context) : this() {
         this.context = context
     }
 
+    constructor(context : Context , listener : MakeEntryActivity.DeleteItemListener) : this() {
+        this.context = context
+        this.deleteListener = listener
+    }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent!!.getContext())
         val view = inflater.inflate(R.layout.item_player_list, parent, false)
-        return ViewHolder(view,this.context!!)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder!!.bind(item!!.get(position), position == removedPosition, this@PlayerListAdapter)
+        holder!!.bind(item!!.get(position), position == removedPosition, this@PlayerListAdapter, deleteListener)
     }
 
     override fun getItemCount(): Int = item!!.size
@@ -51,9 +59,9 @@ class PlayerListAdapter constructor(): RecyclerView.Adapter<PlayerListAdapter.Vi
         notifyItemRemoved(position)
     }
 
-    class ViewHolder(itemView: View, com : Context?) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(player: Player, removedLayout : Boolean, adapter: PlayerListAdapter) = with(itemView) {
+        fun bind(player: Player, removedLayout : Boolean, adapter: PlayerListAdapter, listener: MakeEntryActivity.DeleteItemListener) = with(itemView) {
             if(removedLayout) {
                 user_list_layout.visibility = View.GONE
                 user_list_delete_layout.visibility = View.VISIBLE
@@ -68,6 +76,9 @@ class PlayerListAdapter constructor(): RecyclerView.Adapter<PlayerListAdapter.Vi
                                 .setNegativeButton("CANCEL",DialogInterface.OnClickListener { dialog, which ->
                                     dialog.dismiss()
                                 }).setPositiveButton("OK",DialogInterface.OnClickListener { dialog, which ->
+
+                            //Database Delete
+                            listener.doAction(player.id)
                             adapter.removeItem(adapterPosition)
                         })
                     }
@@ -117,4 +128,5 @@ class PlayerListAdapter constructor(): RecyclerView.Adapter<PlayerListAdapter.Vi
             }
         }
     }
+
 }

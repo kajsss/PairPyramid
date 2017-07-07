@@ -21,7 +21,9 @@ class AddPlayerPresenter constructor(override var view: AddPlayerContract.View) 
             }
         }
 
-        var newId = selectAllPlayerList.size + 1
+        //var newId = selectAllPlayerList.size + 1
+        var newId = playerDao.selectMaxId()
+
         var newPlayer = Player(newId, name, email)
         if (picture != null) newPlayer.picture = picture
 
