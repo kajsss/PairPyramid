@@ -26,44 +26,39 @@ class MakeEntryPresenter constructor(override var view : MakeEntryContract.View)
         var playerIdList = checkedPlayerList.map { it.id } .toTypedArray()
         var keepPlayerIdList = checkedPlayerList.filter { it.keep }.map { it.id } .toTypedArray()
         var resultPartnerList = ArrayList<Partner>()
-        var map = partnerDao.selectPairStatistics(playerDao.selectAllPlayerList())
-
-        var completeQueue = ArrayList<Int>()
-
-        map.forEach { (pair, pyramidInfo) ->
-            if(completeQueue.size >= playerIdList.size-1) return@forEach
-            if(!playerIdList.contains(pair.first) || !playerIdList.contains(pair.second)) return@forEach
-            if(completeQueue.contains(pair.first) || completeQueue.contains(pair.second)) return@forEach
-            if(pair.first.equals(pair.second)) return@forEach
-            if(!(keepPlayerIdList.contains(pair.first).xor(keepPlayerIdList.contains(pair.second)))) return@forEach
-
-            completeQueue.add(pair.first)
-            completeQueue.add(pair.second)
-            resultPartnerList.add(Partner(pair.first, pair.second))
+        var completeIdList = ArrayList<Int>()
+        var map = partnerDao.selectPairStatistics(playerDao.selectAllPlayerList()).filter {
+            playerIdList.contains(it.key.first) && playerIdList.contains(it.key.second)
+            && it.key.first != it.key.second
         }
 
-        map.forEach { (pair, pyramidInfo) ->
-            if(completeQueue.size >= playerIdList.size-1) return@forEach
-            if(!playerIdList.contains(pair.first) || !playerIdList.contains(pair.second)) return@forEach
-            if(completeQueue.contains(pair.first) || completeQueue.contains(pair.second)) return@forEach
-            if(pair.first.equals(pair.second)) return@forEach
-
-            completeQueue.add(pair.first)
-            completeQueue.add(pair.second)
-            resultPartnerList.add(Partner(pair.first, pair.second))
-        }
-
-        if(completeQueue.size != playerIdList.size) {
-            playerIdList.filter { !completeQueue.contains(it) }.forEach { soloPlayer ->
-                completeQueue.add(soloPlayer)
-                completeQueue.add(soloPlayer)
-                resultPartnerList.add(Partner(soloPlayer, soloPlayer))
+        map .filter { keepPlayerIdList.contains(it.key.first).xor(keepPlayerIdList.contains(it.key.second)) }
+            .forEach { (pair, pyramidInfo) ->
+                matchAll(pair, completeIdList, resultPartnerList)
             }
+
+        map.forEach { (pair, pyramidInfo) ->
+            matchAll(pair, completeIdList, resultPartnerList)
+        }
+
+        playerIdList.filter { !completeIdList.contains(it) }.forEach { soloPlayer ->
+            match(Pair(soloPlayer, soloPlayer), completeIdList, resultPartnerList)
         }
 
         return resultPartnerList
     }
 
+    private fun matchAll(pair: Pair<Int, Int>, completeIdList: ArrayList<Int>, resultPartnerList: ArrayList<Partner>) {
+        if(!completeIdList.contains(pair.first) && !completeIdList.contains(pair.second)) {
+            match(pair, completeIdList, resultPartnerList)
+        }
+    }
+
+    private fun match(pair: Pair<Int, Int>, completeIdList: ArrayList<Int>, resultPartnerList: ArrayList<Partner>) {
+        completeIdList.add(pair.first)
+        completeIdList.add(pair.second)
+        resultPartnerList.add(Partner(pair.first, pair.second))
+    }
 
 
     override fun insertPartners(matchingPartners: List<Partner>) {
