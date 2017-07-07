@@ -6,49 +6,28 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.pyramid_layout.view.*
 import msl.com.pairpyramid.R
+import msl.com.pairpyramid.model.Player
 import msl.com.pairpyramid.model.PyramidInfo
 
 
 open class PyramidView : LinearLayout {
 
     var playersCount = 5 // Default Player Count
-    lateinit var nameList : Array<String>
+    lateinit var activePlayerList: Array<Player>
     lateinit var pairCountsHashMap: HashMap<Pair<Int, Int>, PyramidInfo>
-
-
-    constructor(context: Context) : super(context) {
-        initView()
-        drawPyramid()
-    }
-
-    constructor(context: Context, playersCount : Int) : super(context) {
-        this.playersCount = playersCount
-        initView()
-        drawPyramid()
-    }
-
-    constructor(context: Context, playersCount : Int, nameList : Array<String>) : super(context) {
-        this.playersCount = playersCount
-        this.nameList = nameList
-        initView()
-        drawPyramid()
-    }
-
-
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context,attributeSet) {
         initView()
         drawPyramid()
     }
 
-    constructor(context: Context, nameList: Array<String>, pairCountsHashMap : HashMap<Pair<Int, Int>, PyramidInfo>) : super(context) {
-        this.playersCount = nameList.size
-        this.nameList = nameList
+    constructor(context: Context, activePlayerList: Array<Player>, pairCountsHashMap : HashMap<Pair<Int, Int>, PyramidInfo>) : super(context) {
+        this.playersCount = activePlayerList.size
+        this.activePlayerList = activePlayerList
         this.pairCountsHashMap = pairCountsHashMap
         initView()
         drawPyramid()
     }
-
 
     private fun initView() {
         LayoutInflater.from(context).inflate(R.layout.pyramid_layout, this);
@@ -59,7 +38,7 @@ open class PyramidView : LinearLayout {
         for(i in 1..playersCount){
             var newLine  = getNewLine(context)
             for(j in 1..i){
-                var pyramidInfo = pairCountsHashMap[Pair(j, playersCount - i + j )]?: PyramidInfo()
+                var pyramidInfo = pairCountsHashMap[Pair(activePlayerList[j-1].id, activePlayerList[playersCount - i + j-1].id )]?: PyramidInfo()
 
                 newLine.addView(PyramidTriangle(context, getTriangleSize(), getFontSize(), pyramidInfo))
             }
@@ -67,7 +46,7 @@ open class PyramidView : LinearLayout {
         }
         //draw Name list
         for(i in 0 until playersCount){
-            layout_name.addView(PyramidName(context, getTriangleSize(), nameList[i]))
+            layout_name.addView(PyramidName(context, getTriangleSize(), activePlayerList[i].name))
         }
     }
 

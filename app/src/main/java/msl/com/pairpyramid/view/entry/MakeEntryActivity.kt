@@ -52,6 +52,7 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
             var matchingPartners = makeEntryPresenter.matchingPartners(playerListAdapter.item!!.filter { it.checked == true })
             showMatchingResultPopup(matchingPartners)
         }
+
     }
 
     private fun showMatchingResultPopup(matchingPartners: List<Partner>) {

@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.main.MainActivity"
+            android:name=".view.pyramid.PairPyramidActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.entry.MakeEntryActivity"
