@@ -3,7 +3,6 @@ package msl.com.pairpyramid.database.dao
 import android.content.Context
 import msl.com.pairpyramid.database.DatabaseHelper
 import msl.com.pairpyramid.database.parser.PartnerRowParser
-import msl.com.pairpyramid.model.PairStatistics
 import msl.com.pairpyramid.model.Partner
 import msl.com.pairpyramid.model.PyramidInfo
 import org.jetbrains.anko.db.SqlOrderDirection
@@ -42,35 +41,42 @@ class PartnerDao(var context: Context) {
         var allPartnerList = selectAllPartnerList()
         var pairCountHashMap : HashMap<Pair<Int, Int>, PyramidInfo> = hashMapOf()
 
-        allPartnerList?.forEach{
-            if(pairCountHashMap[Pair(it.player_1, it.player_2)] == null) {
-                pairCountHashMap[Pair(it.player_1, it.player_2)] = PyramidInfo(1)}
-            else {
-                pairCountHashMap[Pair(it.player_1, it.player_2)]!!.inc()
-            }
-        }
-
-        allPartnerList!!.filter { it.createDate == allPartnerList!!.get(0).createDate }.forEach {
-            pairCountHashMap[Pair(it.player_1, it.player_2)]?.recentlyPaired = true
-        }
+        getMatchingCount(allPartnerList, pairCountHashMap)
+        getRecentlyPaired(allPartnerList, pairCountHashMap)
 
         return pairCountHashMap
     }
 
-    fun selectPairStatistics() : SortedMap<Pair<Int, Int>, PairStatistics> {
+    private fun getMatchingCount(allPartnerList: List<Partner>?, pairCountHashMap: HashMap<Pair<Int, Int>, PyramidInfo>) {
+        allPartnerList?.forEach {
+            if (pairCountHashMap[Pair(it.player_1, it.player_2)] == null) {
+                pairCountHashMap[Pair(it.player_1, it.player_2)] = PyramidInfo(1, false)
+            } else {
+                pairCountHashMap[Pair(it.player_1, it.player_2)]!!.inc()
+            }
+        }
+    }
+
+    private fun getRecentlyPaired(allPartnerList: List<Partner>?, pairCountHashMap: HashMap<Pair<Int, Int>, PyramidInfo>) {
+        allPartnerList!!.filter { !"".equals(it.createDate) && it.createDate.equals(allPartnerList!!.get(0).createDate) }.forEach {
+            pairCountHashMap[Pair(it.player_1, it.player_2)]?.recentlyPaired = true
+        }
+    }
+
+    fun selectPairStatistics() : SortedMap<Pair<Int, Int>, PyramidInfo> {
 
         var allPartnerList = selectAllPartnerList()!!.sortedByDescending{
             it.createDate
         }
-        var pairStatisticsHashMap : HashMap<Pair<Int, Int>, PairStatistics> = hashMapOf()
+        var pairStatisticsHashMap : HashMap<Pair<Int, Int>, PyramidInfo> = hashMapOf()
 
 
         allPartnerList?.forEach{
             if(pairStatisticsHashMap[Pair(it.player_1, it.player_2)] == null){
-                pairStatisticsHashMap[Pair(it.player_1, it.player_2)] = PairStatistics(0, "19000101000000")
+                pairStatisticsHashMap[Pair(it.player_1, it.player_2)] = PyramidInfo(0, false,"19000101000000")
             }
-                var pairStatistics = PairStatistics(pairStatisticsHashMap[Pair(it.player_1, it.player_2)]!!.count.inc(), it.createDate)
-                pairStatisticsHashMap.set(Pair(it.player_1, it.player_2), pairStatistics)
+            var pairStatistics = PyramidInfo(pairStatisticsHashMap[Pair(it.player_1, it.player_2)]!!.count!!.inc(), false, it.createDate)
+            pairStatisticsHashMap.set(Pair(it.player_1, it.player_2), pairStatistics)
         }
 
         return pairStatisticsHashMap.toSortedMap(compareBy { pairStatisticsHashMap[it] })
