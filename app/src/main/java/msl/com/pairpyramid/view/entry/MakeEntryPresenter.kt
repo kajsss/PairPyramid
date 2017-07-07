@@ -16,9 +16,9 @@ class MakeEntryPresenter constructor(override var view : MakeEntryContract.View)
         partnerDao = PartnerDao(view.getContext())
     }
 
-    override fun loadPlayerList(updateAdapter: (List<Player>) -> Unit) {
+    override fun loadPlayerList() {
         playerList = playerDao.selectAllPlayerList()!!
-        updateAdapter(playerList)
+        view.updateAdapter(playerList)
     }
 
     override fun matchingPartners(checkedPlayerList: List<Player>) : List<Partner>{

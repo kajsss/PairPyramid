@@ -11,10 +11,8 @@ import kotlinx.android.synthetic.main.activity_add_player.*
 import msl.com.pairpyramid.R
 import msl.com.pairpyramid.view.entry.AddPlayerContract
 import msl.com.pairpyramid.view.entry.AddPlayerPresenter
-import msl.com.pairpyramid.view.entry.MakeEntryActivity
 import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.sdk25.coroutines.onClick
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 class AddPlayerActivity : AppCompatActivity(), AddPlayerContract.View{
@@ -79,7 +77,7 @@ class AddPlayerActivity : AppCompatActivity(), AddPlayerContract.View{
     }
     override fun showCompleteMessage() {
         toast("Insert complete !")
-        startActivity<MakeEntryActivity>()
+        finish()
     }
 
 }

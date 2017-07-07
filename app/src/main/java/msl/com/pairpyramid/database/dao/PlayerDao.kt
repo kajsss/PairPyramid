@@ -18,7 +18,6 @@ class PlayerDao(var context: Context) {
         get() = DatabaseHelper.getInstance(context.applicationContext)
 
     fun selectAllPlayerList(): List<Player> {
-
         var playerList: List<Player> = arrayListOf()
         database.use {
             playerList = select("Player").whereArgs("useYn=1").parseList(PlayerRowParser())
@@ -27,7 +26,6 @@ class PlayerDao(var context: Context) {
     }
 
     fun selectPlayerNameById(id: Int): String {
-
         var name: String = ""
         database.use {
             select("Player", "name").whereArgs("id = $id").exec {
@@ -38,13 +36,11 @@ class PlayerDao(var context: Context) {
         return name
     }
     fun selectMaxId(): Int {
-
         var maxId = 0
         database.use {
             select("Player", "id").orderBy("id", SqlOrderDirection.DESC).exec {
                 if(moveToNext()) {
                     maxId = getInt(0)
-                    println(maxId)
                 }
             }
         }
@@ -53,22 +49,16 @@ class PlayerDao(var context: Context) {
 
 
     fun insertPlayer(player: Player): Long {
-
         if (player.picture != null) {
             var bitmap = player.picture as Bitmap
             val bos = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos)
 
             return database.writableDatabase.insert("Player", "id" to player.id, "name" to player.name, "email" to player.email, "useYn" to 1, "picture" to bos.toByteArray())
-
         } else {
-
             return database.writableDatabase.insert("Player", "id" to player.id, "name" to player.name, "email" to player.email, "useYn" to 1)
-
         }
-
     }
-
 
     fun removePlayer(playerId: String): Int {
         return database.writableDatabase.update("Player", "useYn" to "0").whereArgs("id=${playerId}").exec()

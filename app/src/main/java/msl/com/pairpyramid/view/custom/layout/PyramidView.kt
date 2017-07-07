@@ -58,7 +58,8 @@ open class PyramidView : LinearLayout {
 
     private fun getTriangleSize(): Int {
         when(playersCount){
-            0,1,2 -> return 0
+            0     -> return 0
+            1,2   -> return 100
             3     -> return 70
             4     -> return 65
             5     -> return 55

@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_make_entry.*
 import msl.com.pairpyramid.R
 import msl.com.pairpyramid.database.dao.PlayerDao
 import msl.com.pairpyramid.model.Partner
+import msl.com.pairpyramid.model.Player
 import msl.com.pairpyramid.view.custom.adapter.PlayerListAdapter
 import msl.com.pairpyramid.view.custom.adapter.PlayerListItemTouchHelperCallback
 import msl.com.pairpyramid.view.player.AddPlayerActivity
@@ -35,11 +36,6 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
         var helper = ItemTouchHelper(PlayerListItemTouchHelperCallback(playerListAdapter))
         helper.attachToRecyclerView(playerRecyclerView)
 
-        makeEntryPresenter.loadPlayerList { playerList ->
-            playerListAdapter.item = playerList
-            playerListAdapter.notifyDataSetChanged()
-        }
-
         findViewById(R.id.btn_cancel).onClick {
             moveToMainActivity()
         }
@@ -53,6 +49,16 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
             showMatchingResultPopup(matchingPartners)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        makeEntryPresenter.loadPlayerList()
+    }
+
+    override fun updateAdapter(playerList: List<Player>) {
+        playerListAdapter.item = playerList
+        playerListAdapter.notifyDataSetChanged()
     }
 
     private fun showMatchingResultPopup(matchingPartners: List<Partner>) {
@@ -78,8 +84,6 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
 
     }
 
-
-
     fun moveToMainActivity() {
         finish()
     }
@@ -89,7 +93,6 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
         val  playerList = PlayerDao(this).selectAllPlayerList()
         if( playerList.size < 8) startActivity<AddPlayerActivity>()
         else toast("Maximum player number is 8 !")
-
     }
 
     override fun getContext(): Context {
