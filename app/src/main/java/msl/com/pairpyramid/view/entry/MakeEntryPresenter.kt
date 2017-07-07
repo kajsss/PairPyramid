@@ -23,21 +23,21 @@ class MakeEntryPresenter constructor(override var view : MakeEntryContract.View)
 
     override fun matchingPartners(checkedPlayerList: List<Player>) : List<Partner>{
 
-
         var playerIdList = checkedPlayerList.map { it.id } .toTypedArray()
         var resultPartnerList = ArrayList<Partner>()
-        var map = partnerDao.selectPairStatistics()
+        var map = partnerDao.selectPairStatistics(playerDao.selectAllPlayerList())
 
         var completeQueue = ArrayList<Int>()
-        map.forEach { (t, u) ->
-            if(completeQueue.size >= playerIdList.size-1) return@forEach
-            if(!playerIdList.contains(t.first) || !playerIdList.contains(t.second)) return@forEach
-            if(completeQueue.contains(t.first) || completeQueue.contains(t.second)) return@forEach
-            if(t.first == t.second) return@forEach
 
-            completeQueue.add(t.first)
-            completeQueue.add(t.second)
-            resultPartnerList.add(Partner(t.first, t.second))
+         map.forEach { (pair, pyramidInfo) ->
+            if(completeQueue.size >= playerIdList.size-1) return@forEach
+            if(!playerIdList.contains(pair.first) || !playerIdList.contains(pair.second)) return@forEach
+            if(completeQueue.contains(pair.first) || completeQueue.contains(pair.second)) return@forEach
+            if(pair.first.equals(pair.second)) return@forEach
+
+            completeQueue.add(pair.first)
+            completeQueue.add(pair.second)
+            resultPartnerList.add(Partner(pair.first, pair.second))
         }
 
         if(completeQueue.size != playerIdList.size) {
