@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import kotlinx.android.synthetic.main.item_player_list.view.*
 import msl.com.pairpyramid.R
 import msl.com.pairpyramid.model.Player
@@ -102,8 +103,7 @@ class PlayerListAdapter constructor() : RecyclerView.Adapter<PlayerListAdapter.V
                     user_picture.imageTintList = null
 
                     val bitmap = player.picture
-                    val circleBitmap = Bitmap.createBitmap(bitmap!!.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888)
-
+                    val circleBitmap = Bitmap.createBitmap(bitmap!!.width, bitmap.width, Bitmap.Config.ARGB_8888)
                     val shader = BitmapShader(bitmap, TileMode.CLAMP, TileMode.CLAMP)
                     val paint = Paint()
                     paint.setShader(shader)
@@ -111,14 +111,10 @@ class PlayerListAdapter constructor() : RecyclerView.Adapter<PlayerListAdapter.V
                     val c = Canvas(circleBitmap)
                     val bitmapWidth: Float = (bitmap.width / 2).toFloat()
                     val bitmapHeigth: Float = (bitmap.height / 2).toFloat()
-                    c.drawCircle(bitmapWidth, bitmapHeigth, bitmapWidth, paint)
-
+                    c.drawCircle(bitmapWidth, bitmapWidth, bitmapWidth, paint)
 
                     user_picture.setImageBitmap(circleBitmap)
-
-                    //user_picture.imageTintList = null
-                    //user_picture.scaleType = ImageView.ScaleType.FIT_XY
-                    //user_picture.imageBitmap = player.picture
+                    user_picture.scaleType = ImageView.ScaleType.FIT_XY
                 }
 
                 layout_check.onClick {
