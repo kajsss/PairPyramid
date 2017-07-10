@@ -7,7 +7,7 @@ import java.util.*
 data class Partner(var player_1: Int, var player_2: Int){
 
     var id : String = UUID.randomUUID().toString()
-    var createDate : String = SimpleDateFormat("yyyyMMddhhmmss").format(Date())
+    var createDate : String = SimpleDateFormat("yyyyMMddHHmmss").format(Date())
 
     init {
         var temp : Int

@@ -80,7 +80,7 @@ class PartnerDao(var context: Context) {
             pairStatisticsHashMap.set(Pair(it.player_1, it.player_2), pairStatistics)
         }
 
-        return pairStatisticsHashMap.toSortedMap(compareBy { pairStatisticsHashMap [it] })
+        return pairStatisticsHashMap.toSortedMap(compareBy { key->  pairStatisticsHashMap[key] })
 
     }
 

@@ -2,6 +2,7 @@ package msl.com.pairpyramid.view.custom.layout
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.pyramid_layout.view.*
@@ -35,10 +36,11 @@ open class PyramidView : LinearLayout {
 
     private fun drawPyramid() {
         //draw pyramid
-        for(i in 1..playersCount){
+        for(i in 0 until playersCount){
             var newLine  = getNewLine(context)
-            for(j in 1..i){
-                var pyramidInfo = pairCountsHashMap[Pair(activePlayerList[j-1].id, activePlayerList[playersCount - i + j-1].id )]?: PyramidInfo()
+            for(j in 0..i){
+                var pyramidInfo = pairCountsHashMap[Pair(activePlayerList[j].id, activePlayerList[playersCount - i + j -1].id )]?: PyramidInfo()
+                d("# pyramidInfo : ", "${pyramidInfo.recentlyPaired}")
 
                 newLine.addView(PyramidTriangle(context, getTriangleSize(), getFontSize(), pyramidInfo))
             }

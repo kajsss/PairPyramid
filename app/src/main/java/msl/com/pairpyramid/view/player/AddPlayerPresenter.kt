@@ -16,7 +16,10 @@ class AddPlayerPresenter constructor(override var view: AddPlayerContract.View) 
 
         selectAllPlayerList.forEach {
             if (it.email.equals(email)) {
-                view.showErrorMessage(AddPlayerContract.View.DUPLICATE_ERROR_MESSAGE)
+                view.showErrorMessage(AddPlayerContract.View.EMAIL_DUPLICATE_ERROR_MESSAGE)
+                return@addPlayer
+            }else if (it.name.equals(name)) {
+                view.showErrorMessage(AddPlayerContract.View.NAME_DUPLICATE_ERROR_MESSAGE)
                 return@addPlayer
             }
         }

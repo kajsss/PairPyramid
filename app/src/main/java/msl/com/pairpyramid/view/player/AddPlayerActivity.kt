@@ -3,6 +3,7 @@ package msl.com.pairpyramid.view.player
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,6 +15,8 @@ import msl.com.pairpyramid.view.entry.AddPlayerPresenter
 import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.toast
+
+
 
 class AddPlayerActivity : AppCompatActivity(), AddPlayerContract.View{
 
@@ -31,6 +34,7 @@ class AddPlayerActivity : AppCompatActivity(), AddPlayerContract.View{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_player)
+
         addPlayerPresenter = AddPlayerPresenter(this)
 
         btn_cancel.onClick {
@@ -51,11 +55,24 @@ class AddPlayerActivity : AppCompatActivity(), AddPlayerContract.View{
         }
     }
 
+
+
     override fun takePicture() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (takePictureIntent.resolveActivity(packageManager) != null) {
+            takePictureIntent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
         }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        if(mBitmapImage != null){
+            img_picture.imageBitmap = mBitmapImage
+            img_picture.imageTintList = null
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -63,14 +80,13 @@ class AddPlayerActivity : AppCompatActivity(), AddPlayerContract.View{
             val extras = data.extras
             val imageBitmap = extras.get("data") as Bitmap
             mBitmapImage = imageBitmap
-            img_picture.imageTintList = null
-            img_picture.imageBitmap = imageBitmap
         }
     }
 
     override fun showErrorMessage(errorCode : Int) {
         when(errorCode){
-            AddPlayerContract.View.DUPLICATE_ERROR_MESSAGE -> toast("Duplicate Email Address !")
+            AddPlayerContract.View.NAME_DUPLICATE_ERROR_MESSAGE -> toast("Duplicate Name !")
+            AddPlayerContract.View.EMAIL_DUPLICATE_ERROR_MESSAGE -> toast("Duplicate Email Address !")
             AddPlayerContract.View.INSERT_ERROR_MESSAGE -> toast("Failed. Insert Player !")
         }
 

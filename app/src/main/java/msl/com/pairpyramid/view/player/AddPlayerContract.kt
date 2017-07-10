@@ -12,7 +12,8 @@ interface AddPlayerContract {
     interface View {
 
         companion object{
-            val DUPLICATE_ERROR_MESSAGE = 1
+            val NAME_DUPLICATE_ERROR_MESSAGE = 0
+            val EMAIL_DUPLICATE_ERROR_MESSAGE = 1
             val INSERT_ERROR_MESSAGE = 2
         }
 

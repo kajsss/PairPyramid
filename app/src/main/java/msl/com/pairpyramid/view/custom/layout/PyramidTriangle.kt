@@ -50,10 +50,10 @@ open class PyramidTriangle : RelativeLayout {
         text_point.text = pyramidInfo.count.toString()
         text_point.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.toFloat())
 
-        if(pyramidInfo.recentlyPaired?:false) {
-            text_point.setTypeface(null, Typeface.BOLD)
-            //text_point.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.toFloat() + 3)
-            text_point.setTextColor(resources.getColor(R.color.DeepSkyBlue))
+            if(pyramidInfo.recentlyPaired == true ) {
+                text_point.setTypeface(null, Typeface.BOLD)
+                //text_point.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.toFloat() + 3)
+                text_point.setTextColor(resources.getColor(R.color.DeepSkyBlue))
         }
     }
 

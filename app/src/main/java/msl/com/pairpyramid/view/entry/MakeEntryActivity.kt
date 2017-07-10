@@ -1,6 +1,7 @@
 package msl.com.pairpyramid.view.entry
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -33,6 +34,8 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
 
         makeEntryPresenter = MakeEntryPresenter(this)
         playerRecyclerView.adapter = playerListAdapter
+        makeEntryPresenter.loadPlayerList()
+
         var helper = ItemTouchHelper(PlayerListItemTouchHelperCallback(playerListAdapter))
         helper.attachToRecyclerView(playerRecyclerView)
 
@@ -51,10 +54,6 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        makeEntryPresenter.loadPlayerList()
-    }
 
     override fun updateAdapter(playerList: List<Player>) {
         playerListAdapter.item = playerList
@@ -88,11 +87,21 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
         finish()
     }
 
+    private val REQUEST_ADD_PLAYER = 1
+
     fun moveToAddPlayerActivity() {
 
         val  playerList = PlayerDao(this).selectAllPlayerList()
-        if( playerList.size < 8) startActivity<AddPlayerActivity>()
+
+        if( playerList.size < 8) startActivityForResult(Intent(this, AddPlayerActivity::class.java), REQUEST_ADD_PLAYER)
         else toast("Maximum player number is 8 !")
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(REQUEST_ADD_PLAYER == requestCode) {
+            makeEntryPresenter.loadPlayerList()
+        }
     }
 
     override fun getContext(): Context {

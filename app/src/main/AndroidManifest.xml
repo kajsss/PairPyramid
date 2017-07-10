@@ -29,7 +29,9 @@
             android:name=".view.entry.MakeEntryActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".view.player.AddPlayerActivity"
-            android:screenOrientation="portrait"></activity>
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
