@@ -71,8 +71,8 @@ class MakeEntryActivity : AppCompatActivity(), MakeEntryContract.View {
                     matchingPartners.forEach { partner ->
                         textView {
                             text = makeEntryPresenter.getPartnerText(partner)
-                        }
-                    }
+                            textSize = 18f
+                        }                    }
                     negativeButton("Rematching") {  }
                     positiveButton("Ok") {
                         makeEntryPresenter.insertPartners(matchingPartners)

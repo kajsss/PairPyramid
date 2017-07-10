@@ -32,12 +32,13 @@ class MakeEntryPresenter constructor(override var view : MakeEntryContract.View)
             && it.key.first != it.key.second
         }
 
-        map .filter { keepPlayerIdList.contains(it.key.first).xor(keepPlayerIdList.contains(it.key.second)) }
+        map .filter { (key, value) -> keepPlayerIdList.contains(key.first).xor(keepPlayerIdList.contains(key.second)) }
             .forEach { (pair, pyramidInfo) ->
                 matchAll(pair, completeIdList, resultPartnerList)
             }
 
-        map.forEach { (pair, pyramidInfo) ->
+        map .filter { (key, value) -> !keepPlayerIdList.contains(key.first) && !keepPlayerIdList.contains(key.second) }
+            .forEach { (pair, pyramidInfo) ->
             matchAll(pair, completeIdList, resultPartnerList)
         }
 
