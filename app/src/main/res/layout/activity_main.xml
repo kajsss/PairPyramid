@@ -38,7 +38,7 @@
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Matching"
+            android:text="@string/matching"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="20sp"

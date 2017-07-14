@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PairPyramid</string>
+    <string name="pair_pyramid">Pair Pyramid</string>
+    <string name="edit_name">Name :</string>
+    <string name="hint_player_name">Player Name</string>
+    <string name="edit_email">Email :</string>
+    <string name="hint_player_email">Player Email</string>
+    <string name="matching">Matching</string>
 </resources>

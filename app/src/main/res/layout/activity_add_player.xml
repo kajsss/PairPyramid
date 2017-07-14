@@ -45,7 +45,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/ico_name"
-            android:text="Name : "
+            android:text="@string/edit_name"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -59,7 +59,7 @@
             android:textAlignment="center"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/text_name"
-            android:hint="Player Name"
+            android:hint="@string/hint_player_name"
             android:imeOptions="actionDone" />
     </RelativeLayout>
 
@@ -88,7 +88,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/ico_email"
-            android:text="Email : "
+            android:text="@string/edit_email"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -102,7 +102,7 @@
             android:textAlignment="center"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/text_email"
-            android:hint="Player Email"
+            android:hint="@string/hint_player_email"
             android:imeOptions="actionDone" />
     </RelativeLayout>
 
