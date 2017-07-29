@@ -35,5 +35,3 @@ MVP 패턴을 적용하여 개발하였습니다.
 ![Pyramid Logo](https://image.ibb.co/ivSFnv/2017_07_14_11_52_55.png)
 ![Pyramid View](https://image.ibb.co/m1UH0F/2017_07_14_11_53_05.png)
 ![Pair Matching](https://preview.ibb.co/fcEjfF/2017_07_14_11_53_22.png)
-
-
